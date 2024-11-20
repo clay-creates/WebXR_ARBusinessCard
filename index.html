@@ -33,6 +33,19 @@
             // Set up renderer
             const renderer = new THREE.WebGLRenderer({ canvas, context: gl, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Set up camera
+            const camera = new THREE.PerspectiveCamera();
+            camera.matrixAutoUpdate = false;
+
+            // Initialize WebXr session
+            const session = await navigator.xr.requestSession('immersive-ar');
+            session.updateRenderState({ baselayer: new XRWebGLLayer(session, gl) });
+
+            // Reference spaces
+            const referenceSpace = await session.requestReferenceSpace('local');
+
+            // Render loop
         }
     </script>
 </body>
