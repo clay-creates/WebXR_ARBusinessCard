@@ -46,7 +46,27 @@
             const referenceSpace = await session.requestReferenceSpace('local');
 
             // Render loop
+            const onXRFrame = (time, frame) => {
+                session.requestAnimationFrame(onXRFrame);
+
+                const pose = frame.getViewerPose(referenceSpace);
+                if (pose) {
+                    const view = pose.views[0];
+                    const viewport = session.renderState.baseLayer.getViewport(view);
+                    renderer.setSize(viewport.width, view.height);
+
+                    camera.matrix.fromArray(view.transform.matrix);
+                    camera.projectionMatrix.fromArray(view.projectionMatrix);
+                    camera.updateMatrixWorld(true);
+
+                    renderer.render(scene, camera);
+                }
+            };
+            Session.requestAnimationFrame(onXRFrame);
         }
+
+        // Attach activate XR to button click
+        document.getElementById('startAR').addEventListener('click', activateXR);
     </script>
 </body>
 </html>
