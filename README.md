@@ -1,7 +1,7 @@
 # **WebXR AR Business Card**
 
 ## **Overview**
-This project is an interactive **WebXR Augmented Reality (AR) Business Card** that allows users to explore Clay Jones' professional details and social links through a visually engaging AR experience. Users can scan a QR code to access the experience directly in their browser on a compatible device—no app downloads required.
+This project is an interactive **WebXR Augmented Reality (AR) Business Card** that allows users to explore my professional details and social links through a visually engaging AR experience. Users can scan a QR code to access the experience directly in their browser on a compatible device—no app downloads required.
 
 ## **Features**
 - **Interactive AR Experience:** Display a 3D business card in augmented reality.
