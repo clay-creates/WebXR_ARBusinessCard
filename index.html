@@ -20,7 +20,7 @@
             const gl = canvas.getContext('webgl', { xrCompatible: true });
 
             // Create Three.js scene
-            const scene = new THREE.Scene(0);
+            const scene = new THREE.Scene();
 
             // Add directional light
             const light = new THREE.DirectionalLight(0xffffff, 1);
@@ -47,7 +47,7 @@
 
             // Initialize WebXr session
             const session = await navigator.xr.requestSession('immersive-ar');
-            session.updateRenderState({ baselayer: new XRWebGLLayer(session, gl) });
+            session.updateRenderState({ baseLayer: new XRWebGLLayer(session, gl) });
 
             // Reference spaces
             const referenceSpace = await session.requestReferenceSpace('local');
@@ -63,7 +63,7 @@
                 pointer.y = (event.clientY / window.innerHeight) * 2 + 1;
 
                 // Perform raycasting to detect objects in scene
-                raycaster.SetFromCamera(pointer, camera);
+                raycaster.setFromCamera(pointer, camera);
                 const intersects = raycaster.intersectObjects(scene.children, true);
 
                 if (intersects.length > 0) {
@@ -92,7 +92,7 @@
                 if (pose) {
                     const view = pose.views[0];
                     const viewport = session.renderState.baseLayer.getViewport(view);
-                    renderer.setSize(viewport.width, view.height);
+                    renderer.setSize(viewport.width, viewport.height);
 
                     camera.matrix.fromArray(view.transform.matrix);
                     camera.projectionMatrix.fromArray(view.projectionMatrix);
@@ -103,7 +103,7 @@
                 }
             };
             // Start the render loop
-            Session.requestAnimationFrame(onXRFrame);
+            session.requestAnimationFrame(onXRFrame);
         }
 
         // Automatically start the AR experience on first user interaction
