@@ -11,11 +11,18 @@
       <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 <body>
-    <button id="startAR">View Business Card</button>
+    <!-- Main funtion to activate WebXR -->
     <script>
         async function activateXR() {
             // Set up canvas and WebGL context
-            const canvas = new THREE.Scene();
+            const canvas = document.createElement('canvas');
+            document.body.appendChild(canvas);
+            const gl = canvas.getContext('webgl', { xrCompatible: true });
+
+            // Create Three.js scene
+            const scene = new THREE.Scene(0);
+
+            // Add directional light
             const light = new THREE.DirectionalLight(0xffffff, 1);
             light.position.set(10, 10, 10);
             scene.add(light);
@@ -45,10 +52,42 @@
             // Reference spaces
             const referenceSpace = await session.requestReferenceSpace('local');
 
+            // Raycaster for detecting interactions with 3D model
+            const raycaster = new THREE.Raycaster();
+            const pointer = new THREE.Vector2();
+
+            // Add event listener for pointer interactions
+            window.addEventListener('pointerdown', (event) => {
+                // Update pointer coordinates based on user taps
+                pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+                pointer.y = (event.clientY / window.innerHeight) * 2 + 1;
+
+                // Perform raycasting to detect objects in scene
+                raycaster.SetFromCamera(pointer, camera);
+                const intersects = raycaster.intersectObjects(scene.children, true);
+
+                if (intersects.length > 0) {
+                    const clickedObject = intersects[0].object;
+
+                    // Perform actions based on clicked object name
+                    if (clickedObject.name === 'GithubIcon') {
+                        window.open('https://github.com/clay-creates', '_blank');
+                    } else if (clickedObject.name === 'LinkedInIcon') {
+                        window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
+                    } else if (clickedObject.name === 'GmailIcon') {
+                        window.location.href = 'mailto:claycreatesstuff@gmail.com';
+                    }
+                }
+            });
+
             // Render loop
             const onXRFrame = (time, frame) => {
                 session.requestAnimationFrame(onXRFrame);
 
+                // Bind graphics framebuffer to WebXR session
+                gl.bindFramebuffer(gl.FRAMEBUFFER, session.renderState.baseLayer.framebuffer);
+
+                // Get viewer pose and update camera
                 const pose = frame.getViewerPose(referenceSpace);
                 if (pose) {
                     const view = pose.views[0];
@@ -59,14 +98,22 @@
                     camera.projectionMatrix.fromArray(view.projectionMatrix);
                     camera.updateMatrixWorld(true);
 
+                    // Render the scene
                     renderer.render(scene, camera);
                 }
             };
+            // Start the render loop
             Session.requestAnimationFrame(onXRFrame);
         }
 
-        // Attach activate XR to button click
-        document.getElementById('startAR').addEventListener('click', activateXR);
+        // Automatically start the AR experience on first user interaction
+        window.addEventListener('click', () => {
+            if (!navigator.xr) {
+                alert('WebXR is not supported on your device or browser. Try again using Firefox or Google Chrome.');
+                return;
+            }
+            activateXR();
+        }, { once: true });
     </script>
 </body>
 </html>
