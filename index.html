@@ -15,7 +15,24 @@
     <script>
         async function activateXR() {
             // Set up canvas and WebGL context
-        
+            const canvas = new THREE.Scene();
+            const light = new THREE.DirectionalLight(0xffffff, 1);
+            light.position.set(10, 10, 10);
+            scene.add(light);
+
+            // Load business card model
+            const loader = new THREE.GLTFLoader();
+            let businessCard;
+            loader.load("https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/main/ARBusinessCard(with buttons).glb", function (gltf) {
+                businessCard = gltf.scene;
+                businessCard.scale.set(1, 1, 1);
+                businessCard.position.set(0, 0, -1);
+                scene.add(businessCard);
+            });
+
+            // Set up renderer
+            const renderer = new THREE.WebGLRenderer({ canvas, context: gl, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
         }
     </script>
 </body>
