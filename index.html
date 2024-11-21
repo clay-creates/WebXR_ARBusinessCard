@@ -99,22 +99,22 @@
                     camera.projectionMatrix.fromArray(view.projectionMatrix);
                     camera.updateMatrixWorld(true);
 
-                    // Position business card dynamically (once)
-                    if (businessCard && !businessCard.userData.isPositioned) {
-                        const viewerPose = frame.getViewerPose(viewerSpace);
-                        if (viewerPose) {
-                            const viewerTransform = viewerPose.transform;
+                    // // Position business card dynamically (once)
+                    // if (businessCard && !businessCard.userData.isPositioned) {
+                    //     const viewerPose = frame.getViewerPose(viewerSpace);
+                    //     if (viewerPose) {
+                    //         const viewerTransform = viewerPose.transform;
 
-                            // Position model directly in front of camera
-                            businessCard.position.set(
-                                viewerTransform.position.x,
-                                viewerTransform.position.y,
-                                viewerTransform.position.z -1
-                            );
-                            businessCard.rotation.set(0, 0, 0);
-                            businessCard.userData.isPositioned(true);
-                        }
-                    }
+                    //         // Position model directly in front of camera
+                    //         businessCard.position.set(
+                    //             viewerTransform.position.x,
+                    //             viewerTransform.position.y,
+                    //             viewerTransform.position.z -1
+                    //         );
+                    //         businessCard.rotation.set(0, 0, 0);
+                    //         businessCard.userData.isPositioned(true);
+                    //     }
+                    // }
 
                     // Render the scene
                     renderer.render(scene, camera);
