@@ -5,44 +5,32 @@
     <title>Clay Jones AR Business Card</title>
     <!-- Include A-Frame -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-
-    <script>
-        // Set up AR session 
-        AFRAME.registerComponent('start-ar', {
-            init: function () {
-                const sceneEl = this.el;
-                sceneEl.renderer.xr.setSessionMode('immersive-ar');
-                sceneEl.renderer.xr.enabled = true;
-                sceneEl.addEventListener('enter-vr', () => {
-                    console.log('AR session started');
-                });
-            }
-        });
-        
-      document.addEventListener('DOMContentLoaded', () => {
-        // Interactive buttons click handler
-        document.querySelectorAll('.interactive').forEach((el) => {
-          el.addEventListener('click', (event) => {
-            const id = el.id;
-            console.log(`Clicked: ${id}`); // Debugging clicks
-            switch (id) {
-              case 'GithubIcon':
-                window.open('https://github.com/clay-creates', '_blank');
-                break;
-              case 'LinkedInIcon':
-                window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
-                break;
-              case 'GmailIcon':
-                window.location.href = 'mailto:claycreatesstuff@gmail.com';
-                break;
-            }
-          });
-        });
-      });
-    </script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+      }
+      #startText {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 20px;
+        color: #ffffff;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 10px 20px;
+        border-radius: 5px;
+        z-index: 1;
+      }
+    </style>
   </head>
   <body>
-    <a-scene start-ar embedded>
+    <!-- Start text overlay -->
+    <div id="startText">Touch the screen to start AR</div>
+
+    <!-- A-Frame scene -->
+    <a-scene embedded vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true">
       <!-- Lighting -->
       <a-light type="directional" position="0 4 -4" intensity="1"></a-light>
 
@@ -54,7 +42,7 @@
       <!-- Business Card Model -->
       <a-entity 
         id="businessCard" 
-        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/ARBusinessCard%28with%20buttons%29.glb)"
+        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/ARBusinessCard%28with%20buttons%29.glb)" 
         scale="0.3 0.3 0.3" 
         position="0 1.6 -2">
       </a-entity>
@@ -85,5 +73,27 @@
         color="#D44638">
       </a-plane>
     </a-scene>
+
+    <!-- Script to start AR on user interaction -->
+    <script>
+      // Ensure AR starts on user interaction
+      document.addEventListener('DOMContentLoaded', () => {
+        const startText = document.getElementById('startText');
+        const scene = document.querySelector('a-scene');
+
+        // Wait for user interaction to start XR
+        const startXR = () => {
+          // Remove start text
+          startText.style.display = 'none';
+
+          // Enable XR
+          scene.enterVR();
+        };
+
+        // Add event listener for user interaction
+        document.body.addEventListener('click', startXR, { once: true });
+        document.body.addEventListener('touchstart', startXR, { once: true });
+      });
+    </script>
   </body>
 </html>
