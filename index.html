@@ -5,7 +5,20 @@
     <title>Clay Jones AR Business Card</title>
     <!-- Include A-Frame -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+
     <script>
+        // Set up AR session 
+        AFRAME.registerComponent('start-ar', {
+            init: function () {
+                const sceneEl = this.el;
+                sceneEl.renderer.xr.setSessionMode('immersive-ar');
+                sceneEl.renderer.xr.enabled = true;
+                sceneEl.addEventListener('enter-vr', () => {
+                    console.log('AR session started');
+                });
+            }
+        });
+        
       document.addEventListener('DOMContentLoaded', () => {
         // Interactive buttons click handler
         document.querySelectorAll('.interactive').forEach((el) => {
@@ -29,7 +42,7 @@
     </script>
   </head>
   <body>
-    <a-scene embedded>
+    <a-scene start-ar embedded>
       <!-- Lighting -->
       <a-light type="directional" position="0 4 -4" intensity="1"></a-light>
 
@@ -41,7 +54,7 @@
       <!-- Business Card Model -->
       <a-entity 
         id="businessCard" 
-        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/ARBusinessCard(with buttons).glb)" 
+        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/ARBusinessCard%28with%20buttons%29.glb)"
         scale="0.3 0.3 0.3" 
         position="0 1.6 -2">
       </a-entity>
