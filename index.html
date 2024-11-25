@@ -3,19 +3,28 @@
   <head>
     <meta charset="utf-8">
     <title>Clay Jones AR Business Card</title>
-    <!-- Include AFrame -->
+    <!-- Include A-Frame -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
     <script>
-      // Event listener for interactive elements
-      document.addEventListener('click', (event) => {
-        const target = event.target;
-        if (target.id === 'GithubIcon') {
-          window.open('https://github.com/clay-creates', '_blank');
-        } else if (target.id === 'LinkedInIcon') {
-          window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
-        } else if (target.id === 'GmailIcon') {
-          window.location.href = 'mailto:claycreatesstuff@gmail.com';
-        }
+      document.addEventListener('DOMContentLoaded', () => {
+        // Interactive buttons click handler
+        document.querySelectorAll('.interactive').forEach((el) => {
+          el.addEventListener('click', (event) => {
+            const id = el.id;
+            console.log(`Clicked: ${id}`); // Debugging clicks
+            switch (id) {
+              case 'GithubIcon':
+                window.open('https://github.com/clay-creates', '_blank');
+                break;
+              case 'LinkedInIcon':
+                window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
+                break;
+              case 'GmailIcon':
+                window.location.href = 'mailto:claycreatesstuff@gmail.com';
+                break;
+            }
+          });
+        });
       });
     </script>
   </head>
@@ -24,23 +33,44 @@
       <!-- Lighting -->
       <a-light type="directional" position="0 4 -4" intensity="1"></a-light>
 
-      <!-- Camera -->
+      <!-- Camera with raycasting -->
       <a-camera position="0 1.6 0">
         <a-entity cursor="rayOrigin: mouse" raycaster="objects: .interactive"></a-entity>
       </a-camera>
 
-      <!-- Business card model -->
+      <!-- Business Card Model -->
       <a-entity 
         id="businessCard" 
-        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/main/ARBusinessCard(with%20buttons).glb)" 
+        gltf-model="url(Models/ARBusinessCard.glb)" 
         scale="0.3 0.3 0.3" 
         position="0 1.6 -2">
       </a-entity>
 
-      <!-- Interactive buttons -->
-      <a-entity id="GithubIcon" class="interactive" position="-0.5 0 -1" geometry="primitive: plane; height: 0.2; width: 0.2" material="color: #4267B2"></a-entity>
-      <a-entity id="LinkedInIcon" class="interactive" position="0 0 -1" geometry="primitive: plane; height: 0.2; width: 0.2" material="color: #0077B5"></a-entity>
-      <a-entity id="GmailIcon" class="interactive" position="0.5 0 -1" geometry="primitive: plane; height: 0.2; width: 0.2" material="color: #D44638"></a-entity>
+      <!-- Interactive Buttons -->
+      <a-plane 
+        id="GithubIcon" 
+        class="interactive" 
+        position="-0.5 0 -1" 
+        height="0.2" 
+        width="0.2" 
+        color="#4267B2">
+      </a-plane>
+      <a-plane 
+        id="LinkedInIcon" 
+        class="interactive" 
+        position="0 0 -1" 
+        height="0.2" 
+        width="0.2" 
+        color="#0077B5">
+      </a-plane>
+      <a-plane 
+        id="GmailIcon" 
+        class="interactive" 
+        position="0.5 0 -1" 
+        height="0.2" 
+        width="0.2" 
+        color="#D44638">
+      </a-plane>
     </a-scene>
   </body>
 </html>
