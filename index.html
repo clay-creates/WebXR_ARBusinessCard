@@ -5,32 +5,71 @@
     <title>Clay Jones AR Business Card</title>
     <!-- Include A-Frame -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-        font-family: Arial, sans-serif;
-      }
-      #startText {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 20px;
-        color: #ffffff;
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 10px 20px;
-        border-radius: 5px;
-        z-index: 1;
-      }
-    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const startARButton = document.getElementById('startAR');
+        const startVRButton = document.getElementById('startVR');
+        const uiContainer = document.getElementById('uiContainer');
+        const scene = document.querySelector('a-scene');
+
+        // Start AR mode
+        startARButton.addEventListener('click', () => {
+          scene.setAttribute('vr-mode-ui', 'enabled: true'); // Ensure UI is enabled
+          scene.enterVR().then(() => {
+            console.log('Entered AR mode');
+            uiContainer.style.display = 'none'; // Hide UI buttons
+          }).catch((err) => {
+            console.error('Failed to start AR:', err);
+            alert('AR could not start. Ensure your browser supports WebXR.');
+          });
+        });
+
+        // Start VR mode
+        startVRButton.addEventListener('click', () => {
+          scene.setAttribute('vr-mode-ui', 'enabled: true'); // Ensure UI is enabled
+          scene.enterVR().then(() => {
+            console.log('Entered VR mode');
+            uiContainer.style.display = 'none'; // Hide UI buttons
+          }).catch((err) => {
+            console.error('Failed to start VR:', err);
+            alert('VR could not start. Ensure your browser supports WebXR.');
+          });
+        });
+
+        // Add click handlers for the interactive buttons in the scene
+        document.querySelectorAll('.interactive').forEach((el) => {
+          el.addEventListener('click', (event) => {
+            const id = el.id;
+            console.log(`Clicked: ${id}`); // Debugging clicks
+            switch (id) {
+              case 'GithubIcon':
+                window.open('https://github.com/clay-creates', '_blank');
+                break;
+              case 'LinkedInIcon':
+                window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
+                break;
+              case 'GmailIcon':
+                window.location.href = 'mailto:claycreatesstuff@gmail.com';
+                break;
+            }
+          });
+        });
+
+        // Scene event listeners for debugging
+        scene.addEventListener('loaded', () => console.log('Scene loaded.'));
+        scene.addEventListener('enter-vr', () => console.log('Entered VR.'));
+        scene.addEventListener('exit-vr', () => console.log('Exited VR.'));
+      });
+    </script>
   </head>
   <body>
-    <!-- Start text overlay -->
-    <div id="startText">Touch the screen to start AR</div>
+    <!-- UI container for starting AR/VR -->
+    <div id="uiContainer" style="text-align: center; margin-top: 20%;">
+      <button id="startAR" style="padding: 10px 20px; font-size: 16px;">Press Button to Start AR</button>
+      <button id="startVR" style="padding: 10px 20px; font-size: 16px;">Press Button to Start VR</button>
+    </div>
 
-    <!-- A-Frame scene -->
-    <a-scene embedded renderer="logarithmicDepthBuffer: true">
+    <a-scene embedded>
       <!-- Lighting -->
       <a-light type="directional" position="0 4 -4" intensity="1"></a-light>
 
@@ -42,7 +81,7 @@
       <!-- Business Card Model -->
       <a-entity 
         id="businessCard" 
-        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/ARBusinessCard%28with%20buttons%29.glb)" 
+        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/ARBusinessCard(with%20buttons).glb)" 
         scale="0.3 0.3 0.3" 
         position="0 1.6 -2">
       </a-entity>
@@ -73,41 +112,5 @@
         color="#D44638">
       </a-plane>
     </a-scene>
-
-    <!-- Script to start AR on user interaction -->
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const startText = document.getElementById('startText');
-        const scene = document.querySelector('a-scene');
-
-        // Start XR experience
-        const startXR = () => {
-          startText.style.display = 'none'; // Hide prompt
-
-          // Attempt to enter VR mode
-          scene.enterVR().then(() => {
-            console.log('XR started successfully!');
-          }).catch((err) => {
-            console.error('Failed to start XR:', err);
-            alert('XR could not start. Please ensure your browser supports AR and try again.');
-          });
-        };
-
-        // Event listeners for interaction
-        document.body.addEventListener('click', startXR, { once: true });
-        document.body.addEventListener('touchstart', startXR, { once: true });
-
-        // Debugging information
-        scene.addEventListener('loaded', () => {
-          console.log('Scene loaded successfully.');
-        });
-        scene.addEventListener('enter-vr', () => {
-          console.log('Entered VR mode.');
-        });
-        scene.addEventListener('exit-vr', () => {
-          console.log('Exited VR mode.');
-        });
-      });
-    </script>
   </body>
 </html>
