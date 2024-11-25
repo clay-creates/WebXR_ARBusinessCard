@@ -30,7 +30,7 @@
     <div id="startText">Touch the screen to start AR</div>
 
     <!-- A-Frame scene -->
-    <a-scene embedded vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true">
+    <a-scene embedded renderer="logarithmicDepthBuffer: true">
       <!-- Lighting -->
       <a-light type="directional" position="0 4 -4" intensity="1"></a-light>
 
@@ -76,23 +76,37 @@
 
     <!-- Script to start AR on user interaction -->
     <script>
-      // Ensure AR starts on user interaction
       document.addEventListener('DOMContentLoaded', () => {
         const startText = document.getElementById('startText');
         const scene = document.querySelector('a-scene');
 
-        // Wait for user interaction to start XR
+        // Start XR experience
         const startXR = () => {
-          // Remove start text
-          startText.style.display = 'none';
+          startText.style.display = 'none'; // Hide prompt
 
-          // Enable XR
-          scene.enterVR();
+          // Attempt to enter VR mode
+          scene.enterVR().then(() => {
+            console.log('XR started successfully!');
+          }).catch((err) => {
+            console.error('Failed to start XR:', err);
+            alert('XR could not start. Please ensure your browser supports AR and try again.');
+          });
         };
 
-        // Add event listener for user interaction
+        // Event listeners for interaction
         document.body.addEventListener('click', startXR, { once: true });
         document.body.addEventListener('touchstart', startXR, { once: true });
+
+        // Debugging information
+        scene.addEventListener('loaded', () => {
+          console.log('Scene loaded successfully.');
+        });
+        scene.addEventListener('enter-vr', () => {
+          console.log('Entered VR mode.');
+        });
+        scene.addEventListener('exit-vr', () => {
+          console.log('Exited VR mode.');
+        });
       });
     </script>
   </body>
