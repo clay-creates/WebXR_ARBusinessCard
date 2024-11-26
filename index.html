@@ -41,8 +41,8 @@
       arjs="sourceType: webcam; debugUIEnabled: false;"
     >
       <!-- Lighting for the scene -->
-      <a-light type="ambient" intensity="0.8"></a-light>
-      <a-light type="directional" position="1 4 -2" intensity="1.5" color="#ffffff"></a-light>
+      <a-light type="ambient" intensity="1"></a-light>
+      <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
 
       <!-- Camera -->
       <a-camera position="0 1.6 0">
@@ -52,10 +52,12 @@
       <!-- Business Card Model -->
       <a-entity 
         id="businessCard" 
-        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/ARBusinessCard(with%20buttons).glb)" 
-        scale="0.3 0.3 0.3" 
+        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/ARBusinessCard%28with%20buttons%29.glb)" 
+        scale="1 1 1" 
         position="0 1.6 -2" 
-        rotation="0 90 0">
+        rotation="0 90 0"
+        event-set__loaded="_event: model-loaded; color: green"
+        event-set__error="_event: model-error; color: red">
         <!-- Define clickable areas mapped to model -->
         <a-plane 
           id="GithubIcon" 
@@ -86,5 +88,11 @@
         </a-plane>
       </a-entity>
     </a-scene>
+    <script>
+      // Handle model loading errors
+      document.querySelector('#businessCard').addEventListener('model-error', () => {
+        console.error('Failed to load the business card model.');
+      });
+    </script>
   </body>
 </html>
