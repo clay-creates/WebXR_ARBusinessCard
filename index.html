@@ -10,21 +10,6 @@
         margin: 0;
         overflow: hidden;
       }
-
-      .a-enter-vr-button.ar {
-        position: fixed;
-        left: 50%;
-        bottom: 50%;
-        transform: translate(-50%, 50%);
-        z-index: 1000;
-        font-size: 1.5em;
-        background-color: #0077B5;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 20px;
-        cursor: pointer;
-      }
     </style>
   </head>
   <body>
@@ -44,9 +29,7 @@
         gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb)" 
         scale="0.5 0.5 0.5" 
         position="0 1.6 -2" 
-        rotation="0 0 0"
-        event-set__loaded="_event: model-loaded; color: green"
-        event-set__error="_event: model-error; color: red">
+        rotation="0 0 0">
         <!-- Define clickable areas mapped to model -->
         <a-plane 
           id="GithubIcon" 
