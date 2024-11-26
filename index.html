@@ -3,80 +3,22 @@
   <head>
     <meta charset="utf-8">
     <title>Clay Jones AR Business Card</title>
+    <!-- Include A-Frame -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.1.1/aframe/build/aframe-ar.min.js"></script>
     <style>
-      /* Hide the VR button */
-      .a-enter-vr-button.vr {
-        display: none !important;
-      }
-
-      /* Center the AR button */
-      .a-enter-vr-button.ar {
+      /* Center the default UI buttons */
+      .a-enter-vr, .a-enter-ar {
         position: fixed;
-        top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 1.5em;
-        background-color: #0077B5;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 20px;
-        z-index: 9999;
+        bottom: 50%;
+        transform: translate(-50%, 50%);
+        z-index: 1000;
       }
     </style>
-  </head>
-  <body>
-    <a-scene
-      vr-mode-ui="enabled: true"
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: false;"
-    >
-      <!-- Lighting -->
-      <a-light type="directional" position="0 4 -4" intensity="1"></a-light>
-
-      <!-- Camera -->
-      <a-camera position="0 1.6 0">
-        <a-entity cursor="rayOrigin: mouse" raycaster="objects: .interactive"></a-entity>
-      </a-camera>
-
-      <!-- Business Card Model -->
-      <a-entity 
-        id="businessCard" 
-        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/ARBusinessCard(with%20buttons).glb)" 
-        scale="0.3 0.3 0.3" 
-        position="0 1.6 -2">
-      </a-entity>
-
-      <!-- Interactive Buttons -->
-      <a-plane 
-        id="GithubIcon" 
-        class="interactive" 
-        position="-0.5 0 -1" 
-        height="0.2" 
-        width="0.2" 
-        color="#4267B2">
-      </a-plane>
-      <a-plane 
-        id="LinkedInIcon" 
-        class="interactive" 
-        position="0 0 -1" 
-        height="0.2" 
-        width="0.2" 
-        color="#0077B5">
-      </a-plane>
-      <a-plane 
-        id="GmailIcon" 
-        class="interactive" 
-        position="0.5 0 -1" 
-        height="0.2" 
-        width="0.2" 
-        color="#D44638">
-      </a-plane>
-    </a-scene>
     <script>
-      // Add interactivity for the buttons on the business card
       document.addEventListener('DOMContentLoaded', () => {
+        // Interactive buttons click handler
         document.querySelectorAll('.interactive').forEach((el) => {
           el.addEventListener('click', (event) => {
             const id = el.id;
@@ -96,5 +38,59 @@
         });
       });
     </script>
+  </head>
+  <body>
+    <a-scene
+      vr-mode-ui="enabled: true"
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: false;"
+    >
+      <!-- Lighting -->
+      <a-light type="ambient" intensity="0.8"></a-light>
+      <a-light type="directional" position="1 4 -2" intensity="1.5" color="#ffffff"></a-light>
+
+      <!-- Camera with raycasting -->
+      <a-camera position="0 1.6 0">
+        <a-entity cursor="rayOrigin: mouse" raycaster="objects: .interactive"></a-entity>
+      </a-camera>
+
+      <!-- Business Card Model -->
+      <a-entity 
+        id="businessCard" 
+        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/ARBusinessCard(with%20buttons).glb)" 
+        scale="0.3 0.3 0.3" 
+        position="0 1.6 -2" 
+        rotation="0 90 0">
+      </a-entity>
+
+      <!-- Interactive Buttons -->
+      <a-plane 
+        id="GithubIcon" 
+        class="interactive" 
+        position="-0.5 0 -1" 
+        height="0.2" 
+        width="0.2" 
+        color="#4267B2" 
+        material="opacity: 0.1; transparent: true;">
+      </a-plane>
+      <a-plane 
+        id="LinkedInIcon" 
+        class="interactive" 
+        position="0 0 -1" 
+        height="0.2" 
+        width="0.2" 
+        color="#0077B5" 
+        material="opacity: 0.1; transparent: true;">
+      </a-plane>
+      <a-plane 
+        id="GmailIcon" 
+        class="interactive" 
+        position="0.5 0 -1" 
+        height="0.2" 
+        width="0.2" 
+        color="#D44638" 
+        material="opacity: 0.1; transparent: true;">
+      </a-plane>
+    </a-scene>
   </body>
 </html>
