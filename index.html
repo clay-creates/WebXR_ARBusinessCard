@@ -5,42 +5,34 @@
     <title>Clay Jones AR Business Card</title>
     <!-- Include A-Frame -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+    <style>
+      /* Center the default VR mode buttons */
+      .a-enter-vr {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 999;
+        display: block;
+        background-color: #333;
+        color: white;
+        font-size: 18px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .a-enter-vr:focus {
+        outline: none;
+      }
+    </style>
     <script>
+      // Event listeners for interactions with the business card's buttons
       document.addEventListener('DOMContentLoaded', () => {
-        const startARButton = document.getElementById('startAR');
-        const startVRButton = document.getElementById('startVR');
-        const uiContainer = document.getElementById('uiContainer');
-        const scene = document.querySelector('a-scene');
-
-        // Start AR mode
-        startARButton.addEventListener('click', () => {
-          scene.setAttribute('vr-mode-ui', 'enabled: true'); // Ensure UI is enabled
-          scene.enterVR().then(() => {
-            console.log('Entered AR mode');
-            uiContainer.style.display = 'none'; // Hide UI buttons
-          }).catch((err) => {
-            console.error('Failed to start AR:', err);
-            alert('AR could not start. Ensure your browser supports WebXR.');
-          });
-        });
-
-        // Start VR mode
-        startVRButton.addEventListener('click', () => {
-          scene.setAttribute('vr-mode-ui', 'enabled: true'); // Ensure UI is enabled
-          scene.enterVR().then(() => {
-            console.log('Entered VR mode');
-            uiContainer.style.display = 'none'; // Hide UI buttons
-          }).catch((err) => {
-            console.error('Failed to start VR:', err);
-            alert('VR could not start. Ensure your browser supports WebXR.');
-          });
-        });
-
-        // Add click handlers for the interactive buttons in the scene
         document.querySelectorAll('.interactive').forEach((el) => {
           el.addEventListener('click', (event) => {
             const id = el.id;
-            console.log(`Clicked: ${id}`); // Debugging clicks
             switch (id) {
               case 'GithubIcon':
                 window.open('https://github.com/clay-creates', '_blank');
@@ -54,22 +46,11 @@
             }
           });
         });
-
-        // Scene event listeners for debugging
-        scene.addEventListener('loaded', () => console.log('Scene loaded.'));
-        scene.addEventListener('enter-vr', () => console.log('Entered VR.'));
-        scene.addEventListener('exit-vr', () => console.log('Exited VR.'));
       });
     </script>
   </head>
   <body>
-    <!-- UI container for starting AR/VR -->
-    <div id="uiContainer" style="text-align: center; margin-top: 20%;">
-      <button id="startAR" style="padding: 10px 20px; font-size: 16px;">Press Button to Start AR</button>
-      <button id="startVR" style="padding: 10px 20px; font-size: 16px;">Press Button to Start VR</button>
-    </div>
-
-    <a-scene embedded>
+    <a-scene vr-mode-ui>
       <!-- Lighting -->
       <a-light type="directional" position="0 4 -4" intensity="1"></a-light>
 
@@ -86,7 +67,7 @@
         position="0 1.6 -2">
       </a-entity>
 
-      <!-- Interactive Buttons -->
+      <!-- Interactive Buttons on the Business Card -->
       <a-plane 
         id="GithubIcon" 
         class="interactive" 
