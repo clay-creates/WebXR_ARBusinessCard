@@ -5,18 +5,38 @@
     <title>Clay Jones AR Business Card</title>
     <!-- Include A-Frame -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-      }
-    </style>
+    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.1.1/aframe/build/aframe-ar.min.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.interactive').forEach((el) => {
+          el.addEventListener('touch', (event) => {
+            const id = el.id;
+            console.log('Touched: ${id}');
+            switch (id) {
+              case 'GithubIcon':
+                window.open('https://github.com/clay-creates', '_blank');
+                break;
+              case 'LinkedInIcon':
+                window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
+                break;
+              case 'GmailIcon':
+                window.location.href = 'mailto:claycreatesstuff@gmail.com';
+                break;
+            }
+          });
+        });
+      });
+    </script>
   </head>
   <body>
-    <a-scene embedded vr-mode-ui="enabled: true">
+    <a-scene 
+      vr-mode-ui="enabled: true"
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: true;"
+      >
       <!-- Lighting for the scene -->
       <a-light type="ambient" intensity="1"></a-light>
-      <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
+      <a-light type="directional" position="0 0 -2" intensity="2" color="#ffffff"></a-light>
 
       <!-- Camera -->
       <a-camera position="0 1.6 0">
@@ -27,8 +47,8 @@
       <a-entity 
         id="businessCard" 
         gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb)" 
-        scale="0.5 0.5 0.5" 
-        position="0 1.6 -2" 
+        scale="1 1 1" 
+        position="0 0 -2" 
         rotation="0 0 0">
         <!-- Define clickable areas mapped to model -->
         <a-plane 
