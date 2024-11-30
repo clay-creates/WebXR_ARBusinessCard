@@ -5,80 +5,102 @@
     <title>Clay Jones AR Business Card</title>
     <!-- Include A-Frame -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.1.1/aframe/build/aframe-ar.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      /* Center the default AR button */
+      .a-enter-vr-button {
+        position: fixed;
+        left: 50%;
+        bottom: 50%;
+        transform: translate(-50%, 50%);
+        font-size: 1.2em;
+        background-color: #0077B5;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+
+      /* Hide VR features */
+      .a-enter-vr-button.vr {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <a-scene embedded vr-mode-ui="enabled: true">
+      <!-- Lighting -->
+      <a-light type="ambient" intensity="1"></a-light>
+      <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
+
+      <!-- Camera with raycasting -->
+      <a-camera position="0 1.6 0">
+        <a-entity cursor="rayOrigin: touch" raycaster="objects: .interactive"></a-entity>
+      </a-camera>
+
+      <!-- Business Card Model -->
+      <a-entity
+        id="businessCard"
+        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/main/Models/ARBusinessCard.glb)"
+        scale="0.5 0.5 0.5"
+        position="0 1.6 -2"
+        rotation="0 0 0">
+        <!-- Clickable Areas -->
+        <a-plane
+          id="GithubIcon"
+          class="interactive"
+          position="-0.3 0.5 0.05"
+          height="0.2"
+          width="0.2"
+          opacity="0"
+          transparent="true">
+        </a-plane>
+        <a-plane
+          id="LinkedInIcon"
+          class="interactive"
+          position="0 0.5 0.05"
+          height="0.2"
+          width="0.2"
+          opacity="0"
+          transparent="true">
+        </a-plane>
+        <a-plane
+          id="GmailIcon"
+          class="interactive"
+          position="0.3 0.5 0.05"
+          height="0.2"
+          width="0.2"
+          opacity="0"
+          transparent="true">
+        </a-plane>
+      </a-entity>
+    </a-scene>
+
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        document.querySelectorAll('.interactive').forEach((el) => {
-          el.addEventListener('touch', (event) => {
+      // Add interactivity to clickable areas
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".interactive").forEach((el) => {
+          el.addEventListener("click", () => {
             const id = el.id;
-            console.log('Touched: ${id}');
             switch (id) {
-              case 'GithubIcon':
-                window.open('https://github.com/clay-creates', '_blank');
+              case "GithubIcon":
+                window.open("https://github.com/clay-creates", "_blank");
                 break;
-              case 'LinkedInIcon':
-                window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
+              case "LinkedInIcon":
+                window.open("https://www.linkedin.com/in/clay-creates/", "_blank");
                 break;
-              case 'GmailIcon':
-                window.location.href = 'mailto:claycreatesstuff@gmail.com';
+              case "GmailIcon":
+                window.location.href = "mailto:claycreatesstuff@gmail.com";
                 break;
             }
           });
         });
       });
     </script>
-  </head>
-  <body>
-    <a-scene 
-      vr-mode-ui="enabled: true"
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: true;"
-      >
-      <!-- Lighting for the scene -->
-      <a-light type="ambient" intensity="1"></a-light>
-      <a-light type="directional" position="0 0 -2" intensity="2" color="#ffffff"></a-light>
-
-      <!-- Camera -->
-      <a-camera position="0 1.6 0">
-        <a-entity cursor="rayOrigin: touch" raycaster="objects: .interactive"></a-entity>
-      </a-camera>
-
-      <!-- Business Card Model -->
-      <a-entity 
-        id="businessCard" 
-        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb)" 
-        scale="1 1 1" 
-        position="0 0 -2" 
-        rotation="0 0 0">
-        <!-- Define clickable areas mapped to model -->
-        <a-plane 
-          id="GithubIcon" 
-          class="interactive" 
-          position="-0.3 0.5 0.05" 
-          height="0.2" 
-          width="0.2" 
-          opacity="0" 
-          transparent="true">
-        </a-plane>
-        <a-plane 
-          id="LinkedInIcon" 
-          class="interactive" 
-          position="0 0.5 0.05" 
-          height="0.2" 
-          width="0.2" 
-          opacity="0" 
-          transparent="true">
-        </a-plane>
-        <a-plane 
-          id="GmailIcon" 
-          class="interactive" 
-          position="0.3 0.5 0.05" 
-          height="0.2" 
-          width="0.2" 
-          opacity="0" 
-          transparent="true">
-        </a-plane>
-      </a-entity>
-    </a-scene>
   </body>
 </html>
