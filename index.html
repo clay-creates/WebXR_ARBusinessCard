@@ -36,6 +36,11 @@
       #startAR:focus {
         outline: none;
       }
+
+      /* Hide scene until AR is activated */
+      #sceneContainer {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -45,11 +50,11 @@
     </div>
 
     <!-- A-Frame Scene -->
-    <a-scene embedded id="sceneContainer">
+    <a-scene embedded id="sceneContainer" arjs>
       <!-- Preload Models -->
       <a-assets>
         <a-asset id="businessCardModel" 
-          gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb)">
+          gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/AR-Business-Card-Buttons.glb)">
         </a-asset>
       </a-assets>
 
@@ -106,13 +111,17 @@
         const uiContainer = document.getElementById('uiContainer');
         const scene = document.querySelector('#sceneContainer');
 
-        // Reset scene attributes on page load
-        scene.removeAttribute('arjs'); // Remove AR.js attribute initially
+        // Hide AR scene initially
+        scene.style.display = 'none';
 
         // Start AR mode when the button is clicked
         startARButton.addEventListener('click', () => {
+          // Show the AR scene and hide the button
+          scene.style.display = 'block';
+          uiContainer.style.display = 'none';
+
+          // Activate AR session
           scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
-          uiContainer.style.display = 'none'; // Hide the start button
         });
 
         // Debugging for model loading and interactions
@@ -124,6 +133,7 @@
           console.error('Failed to load business card model')
         );
 
+        // Handle interaction with clickable areas
         document.querySelectorAll('.interactive').forEach((el) => {
           el.addEventListener('click', () => {
             const id = el.id;
