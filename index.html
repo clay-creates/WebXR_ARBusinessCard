@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Clay Jones AR Business Card</title>
-    <!-- Include A-Frame and AR.js -->
+    <!-- Include A-Frame (WebXR compatible) -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.1.1/aframe/build/aframe-ar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-webxr@1.0.1/dist/aframe-webxr.min.js"></script>
     <style>
       body {
         margin: 0;
@@ -50,7 +50,7 @@
     </div>
 
     <!-- A-Frame Scene -->
-    <a-scene id="sceneContainer" embedded>
+    <a-scene id="sceneContainer" embedded xrweb>
       <!-- Preload Models -->
       <a-assets>
         <a-asset id="businessCardModel" 
@@ -120,8 +120,8 @@
           scene.style.visibility = 'visible';
           uiContainer.style.display = 'none';
 
-          // Activate AR session by dynamically adding the arjs attribute
-          scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
+          // Enable WebXR (make sure it works in your browser)
+          scene.setAttribute('xrweb', '');
         });
 
         // Debugging for model loading and interactions
