@@ -50,7 +50,7 @@
     </div>
 
     <!-- A-Frame Scene -->
-    <a-scene id="sceneContainer" embedded>
+    <a-scene id="sceneContainer" embedded xrweb>
       <!-- Preload Models -->
       <a-assets>
         <a-asset id="businessCardModel" 
@@ -111,22 +111,28 @@
         const uiContainer = document.getElementById('uiContainer');
         const scene = document.querySelector('#sceneContainer');
 
-        // Initially hide the AR scene without using display:none
+        // Initially hide the AR scene
         scene.style.visibility = 'hidden';
 
         // Start AR mode when the button is clicked
-        startARButton.addEventListener('click', () => {
+        startARButton.addEventListener('click', async () => {
           // Show the AR scene and hide the button
           scene.style.visibility = 'visible';
           uiContainer.style.display = 'none';
 
-          // Try entering AR session using the native WebXR system
-          const session = scene.enterVR();
+          try {
+            // Start immersive AR session
+            const session = await scene.enterXR('immersive-ar', 'local', {});
 
-          if (session) {
+            // If the session starts successfully, log success
             console.log("AR session started successfully");
-          } else {
-            console.error("Failed to start AR session");
+
+            // Ensure the camera is enabled and accessible for the AR session
+            const cameraElement = scene.querySelector('a-camera');
+            cameraElement.setAttribute('position', '0 1.6 0'); // Adjust camera height if needed
+
+          } catch (error) {
+            console.error("Failed to start AR session", error);
           }
         });
 
