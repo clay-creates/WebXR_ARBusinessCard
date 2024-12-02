@@ -3,21 +3,15 @@
   <head>
     <meta charset="utf-8">
     <title>Clay Jones AR Business Card</title>
-    <!-- Include A-Frame and AR.js -->
+    <!-- Include A-Frame -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.1.1/aframe/build/aframe-ar.min.js"></script>
     <style>
       body {
         margin: 0;
         overflow: hidden;
       }
 
-      /* Hide the VR button */
-      .a-enter-vr-button.vr {
-        display: none !important;
-      }
-
-      /* Style the AR button */
+      /* Style AR/VR buttons */
       .a-enter-vr-button {
         position: fixed;
         left: 50%;
@@ -38,14 +32,14 @@
   <body>
     <a-scene
       embedded
-      arjs="sourceType: webcam; debugUIEnabled: true;"
       vr-mode-ui="enabled: true"
+      arjs="sourceType: webcam; debugUIEnabled: false;"
     >
       <!-- Lighting -->
       <a-light type="ambient" intensity="1"></a-light>
       <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
 
-      <!-- Camera -->
+      <!-- Camera with raycasting -->
       <a-camera position="0 1.6 0">
         <a-entity cursor="rayOrigin: touch" raycaster="objects: .interactive"></a-entity>
       </a-camera>
@@ -88,20 +82,31 @@
       </a-entity>
     </a-scene>
     <script>
-      // Debug AR.js compatibility
-      if (!navigator.xr) {
-        alert('WebXR is not supported on your device/browser. Try using Chrome or Firefox with AR capabilities.');
-      }
-
-      // Debugging for model and interactivity
+      // Debugging for model loading and interactions
       document.addEventListener('DOMContentLoaded', () => {
         console.log('Scene loaded');
         const businessCard = document.querySelector('#businessCard');
-        businessCard.addEventListener('model-loaded', () => console.log('Business card model loaded successfully'));
-        businessCard.addEventListener('model-error', () => console.error('Failed to load business card model'));
+        businessCard.addEventListener('model-loaded', () =>
+          console.log('Business card model loaded successfully')
+        );
+        businessCard.addEventListener('model-error', () =>
+          console.error('Failed to load business card model')
+        );
         document.querySelectorAll('.interactive').forEach((el) => {
           el.addEventListener('click', () => {
-            console.log(`Clicked: ${el.id}`);
+            const id = el.id;
+            console.log(`Clicked: ${id}`);
+            switch (id) {
+              case 'GithubIcon':
+                window.open('https://github.com/clay-creates', '_blank');
+                break;
+              case 'LinkedInIcon':
+                window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
+                break;
+              case 'GmailIcon':
+                window.location.href = 'mailto:claycreatesstuff@gmail.com';
+                break;
+            }
           });
         });
       });
