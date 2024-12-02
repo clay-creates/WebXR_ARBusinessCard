@@ -98,6 +98,7 @@
         const startARButton = document.getElementById('startAR');
         const uiContainer = document.getElementById('uiContainer');
         const scene = document.querySelector('#sceneContainer');
+        let arSessionActive = false;
 
         // Reset scene attributes on page load
         scene.removeAttribute('arjs'); // Remove AR.js attribute initially
@@ -106,6 +107,7 @@
         startARButton.addEventListener('click', () => {
           scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
           uiContainer.style.display = 'none'; // Hide the start button
+          arSessionActive = true;
         });
 
         // Debugging for model loading and interactions
@@ -133,6 +135,17 @@
                 break;
             }
           });
+        });
+
+        // Stop AR session when leaving or reloading the page
+        window.addEventListener('beforeunload', () => {
+          if (arSessionActive) {
+            const arSystem = scene.systems['arjs'];
+            if (arSystem && arSystem.arToolkitSource) {
+              arSystem.arToolkitSource.stop(); // Stop the camera
+            }
+            console.log('AR.js session stopped on page unload.');
+          }
         });
       });
     </script>
