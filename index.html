@@ -37,9 +37,9 @@
         outline: none;
       }
 
-      /* Hide scene until AR is activated */
+      /* Hide the AR scene until AR is activated */
       #sceneContainer {
-        display: none;
+        visibility: hidden; /* Make the scene invisible until AR is activated */
       }
     </style>
   </head>
@@ -50,11 +50,11 @@
     </div>
 
     <!-- A-Frame Scene -->
-    <a-scene embedded id="sceneContainer" arjs>
+    <a-scene id="sceneContainer" embedded arjs>
       <!-- Preload Models -->
       <a-assets>
         <a-asset id="businessCardModel" 
-          gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/AR-Business-Card-Buttons.glb)">
+          gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb)">
         </a-asset>
       </a-assets>
 
@@ -111,13 +111,13 @@
         const uiContainer = document.getElementById('uiContainer');
         const scene = document.querySelector('#sceneContainer');
 
-        // Hide AR scene initially
-        scene.style.display = 'none';
+        // Initially hide the AR scene without using display:none
+        scene.style.visibility = 'hidden';
 
         // Start AR mode when the button is clicked
         startARButton.addEventListener('click', () => {
           // Show the AR scene and hide the button
-          scene.style.display = 'block';
+          scene.style.visibility = 'visible';
           uiContainer.style.display = 'none';
 
           // Activate AR session
