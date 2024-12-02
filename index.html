@@ -50,7 +50,7 @@
     </div>
 
     <!-- A-Frame Scene -->
-    <a-scene id="sceneContainer" embedded xrweb>
+    <a-scene id="sceneContainer" embedded>
       <!-- Preload Models -->
       <a-assets>
         <a-asset id="businessCardModel" 
@@ -111,7 +111,7 @@
         const uiContainer = document.getElementById('uiContainer');
         const scene = document.querySelector('#sceneContainer');
 
-        // Initially hide the AR scene without using display:none
+        // Initially hide the AR scene
         scene.style.visibility = 'hidden';
 
         // Start AR mode when the button is clicked
@@ -120,8 +120,20 @@
           scene.style.visibility = 'visible';
           uiContainer.style.display = 'none';
 
-          // Enable WebXR (make sure it works in your browser)
-          scene.setAttribute('xrweb', '');
+          // Activate the WebXR session
+          const xr = scene.querySelector('[xrweb]');
+          if (xr && xr.enterXR) {
+            xr.enterXR('immersive-ar', 'local', {});
+
+            // Forces the AR session to request camera permission
+            navigator.mediaDevices.getUserMedia({ video: true })
+              .then(() => {
+                console.log('Camera permission granted');
+              })
+              .catch((err) => {
+                console.error('Camera permission denied', err);
+              });
+          }
         });
 
         // Debugging for model loading and interactions
