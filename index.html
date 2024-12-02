@@ -98,7 +98,7 @@
         const startARButton = document.getElementById('startAR');
         const uiContainer = document.getElementById('uiContainer');
         const scene = document.querySelector('#sceneContainer');
-        let arSessionActive = false;
+        let arSession = null;
 
         // Reset scene attributes on page load
         scene.removeAttribute('arjs'); // Remove AR.js attribute initially
@@ -107,44 +107,25 @@
         startARButton.addEventListener('click', () => {
           scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
           uiContainer.style.display = 'none'; // Hide the start button
-          arSessionActive = true;
-        });
 
-        // Debugging for model loading and interactions
-        const businessCard = document.querySelector('#businessCard');
-        businessCard.addEventListener('model-loaded', () =>
-          console.log('Business card model loaded successfully')
-        );
-        businessCard.addEventListener('model-error', () =>
-          console.error('Failed to load business card model')
-        );
-
-        document.querySelectorAll('.interactive').forEach((el) => {
-          el.addEventListener('click', () => {
-            const id = el.id;
-            console.log(`Clicked: ${id}`);
-            switch (id) {
-              case 'GithubIcon':
-                window.open('https://github.com/clay-creates', '_blank');
-                break;
-              case 'LinkedInIcon':
-                window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
-                break;
-              case 'GmailIcon':
-                window.location.href = 'mailto:claycreatesstuff@gmail.com';
-                break;
-            }
+          // Access AR.js session after initialization
+          scene.addEventListener('loaded', () => {
+            arSession = scene.systems['arjs'].arToolkitSource.domElement;
           });
         });
 
-        // Stop AR session when leaving or reloading the page
+        // Clean up AR.js session on page unload
         window.addEventListener('beforeunload', () => {
-          if (arSessionActive) {
-            const arSystem = scene.systems['arjs'];
-            if (arSystem && arSystem.arToolkitSource) {
-              arSystem.arToolkitSource.stop(); // Stop the camera
-            }
-            console.log('AR.js session stopped on page unload.');
+          if (arSession) {
+            console.log('Stopping AR.js session...');
+            arSession.stop(); // Stop the AR.js camera session
+          }
+
+          const arToolkitSource = scene.systems['arjs'].arToolkitSource;
+          if (arToolkitSource && arToolkitSource.domElement) {
+            console.log('Stopping AR.js video stream...');
+            const videoTracks = arToolkitSource.domElement.srcObject.getTracks();
+            videoTracks.forEach(track => track.stop()); // Stop video tracks explicitly
           }
         });
       });
