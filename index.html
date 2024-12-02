@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Clay Jones AR Business Card</title>
-    <!-- Include A-Frame -->
+    <!-- Include A-Frame and AR.js -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.1.1/aframe/build/aframe-ar.min.js"></script>
     <style>
       body {
         margin: 0;
@@ -37,8 +38,8 @@
   <body>
     <a-scene
       embedded
+      arjs="sourceType: webcam; debugUIEnabled: true;"
       vr-mode-ui="enabled: true"
-      arjs="sourceType: webcam; debugUIEnabled: false;"
     >
       <!-- Lighting -->
       <a-light type="ambient" intensity="1"></a-light>
@@ -86,5 +87,24 @@
         </a-plane>
       </a-entity>
     </a-scene>
+    <script>
+      // Debug AR.js compatibility
+      if (!navigator.xr) {
+        alert('WebXR is not supported on your device/browser. Try using Chrome or Firefox with AR capabilities.');
+      }
+
+      // Debugging for model and interactivity
+      document.addEventListener('DOMContentLoaded', () => {
+        console.log('Scene loaded');
+        const businessCard = document.querySelector('#businessCard');
+        businessCard.addEventListener('model-loaded', () => console.log('Business card model loaded successfully'));
+        businessCard.addEventListener('model-error', () => console.error('Failed to load business card model'));
+        document.querySelectorAll('.interactive').forEach((el) => {
+          el.addEventListener('click', () => {
+            console.log(`Clicked: ${el.id}`);
+          });
+        });
+      });
+    </script>
   </body>
 </html>
