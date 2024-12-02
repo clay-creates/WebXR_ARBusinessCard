@@ -3,15 +3,16 @@
   <head>
     <meta charset="utf-8">
     <title>Clay Jones AR Business Card</title>
-    <!-- Include A-Frame -->
+    <!-- Include A-Frame and AR.js -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/ar.js/2.1.1/aframe/build/aframe-ar.min.js"></script>
     <style>
       body {
         margin: 0;
         overflow: hidden;
       }
 
-      /* Style for the AR start button */
+      /* Style for AR start button */
       #uiContainer {
         position: fixed;
         top: 50%;
@@ -44,13 +45,15 @@
     </div>
 
     <!-- A-Frame Scene -->
-    <a-scene embedded vr-mode-ui="enabled: false">
+    <a-scene
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: true;">
       <!-- Lighting -->
       <a-light type="ambient" intensity="1"></a-light>
       <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
 
-      <!-- Camera with raycasting -->
-      <a-camera position="0 1.6 0">
+      <!-- Camera -->
+      <a-camera position="0 1.6 0" wasd-controls-enabled="false" look-controls-enabled="false">
         <a-entity cursor="rayOrigin: touch" raycaster="objects: .interactive"></a-entity>
       </a-camera>
 
@@ -59,7 +62,7 @@
         id="businessCard" 
         gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/main/Models/AR-Business-Card-Buttons.glb)" 
         scale="0.5 0.5 0.5" 
-        position="0 1.6 -2" 
+        position="0 0 -2" 
         rotation="0 0 0">
         <!-- Clickable Areas -->
         <a-plane
@@ -92,7 +95,6 @@
       </a-entity>
     </a-scene>
 
-    <!-- Script -->
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const startARButton = document.getElementById('startAR');
@@ -101,13 +103,8 @@
 
         // Start AR mode when the button is clicked
         startARButton.addEventListener('click', () => {
-          scene.enterVR().then(() => {
-            console.log('Entered AR mode');
-            uiContainer.style.display = 'none'; // Hide the UI container
-          }).catch((err) => {
-            console.error('Failed to start AR:', err);
-            alert('AR could not start. Ensure your browser supports WebXR.');
-          });
+          scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
+          uiContainer.style.display = 'none'; // Hide the start button
         });
 
         // Debugging for model loading and interactions
