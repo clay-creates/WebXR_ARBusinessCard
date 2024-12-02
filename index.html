@@ -46,6 +46,13 @@
 
     <!-- A-Frame Scene -->
     <a-scene embedded id="sceneContainer">
+      <!-- Preload Models -->
+      <a-assets>
+        <a-asset id="businessCardModel" 
+          gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb)">
+        </a-asset>
+      </a-assets>
+
       <!-- Lighting -->
       <a-light type="ambient" intensity="1"></a-light>
       <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
@@ -58,7 +65,7 @@
       <!-- Business Card Model -->
       <a-entity 
         id="businessCard" 
-        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb)" 
+        gltf-model="#businessCardModel"
         scale="0.5 0.5 0.5" 
         position="0 0 -2" 
         rotation="0 0 0">
