@@ -50,7 +50,7 @@
     </div>
 
     <!-- A-Frame Scene -->
-    <a-scene id="sceneContainer" embedded arjs>
+    <a-scene id="sceneContainer" embedded>
       <!-- Preload Models -->
       <a-assets>
         <a-asset id="businessCardModel" 
@@ -120,7 +120,7 @@
           scene.style.visibility = 'visible';
           uiContainer.style.display = 'none';
 
-          // Activate AR session
+          // Activate AR session by dynamically adding the arjs attribute
           scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
         });
 
