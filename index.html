@@ -45,9 +45,7 @@
     </div>
 
     <!-- A-Frame Scene -->
-    <a-scene
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: true;">
+    <a-scene embedded id="sceneContainer">
       <!-- Lighting -->
       <a-light type="ambient" intensity="1"></a-light>
       <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
@@ -99,7 +97,10 @@
       document.addEventListener('DOMContentLoaded', () => {
         const startARButton = document.getElementById('startAR');
         const uiContainer = document.getElementById('uiContainer');
-        const scene = document.querySelector('a-scene');
+        const scene = document.querySelector('#sceneContainer');
+
+        // Reset scene attributes on page load
+        scene.removeAttribute('arjs'); // Remove AR.js attribute initially
 
         // Start AR mode when the button is clicked
         startARButton.addEventListener('click', () => {
