@@ -5,7 +5,7 @@
     <title>Clay Jones AR Business Card</title>
     <!-- Include A-Frame (WebXR compatible) -->
     <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aframe-webxr@1.0.1/dist/aframe-webxr.min.js"></script>
+    <script src="https://aframe.io/releases/1.4.1/aframe-xr.min.js"></script>
     <style>
       body {
         margin: 0;
@@ -111,7 +111,7 @@
         const uiContainer = document.getElementById('uiContainer');
         const scene = document.querySelector('#sceneContainer');
 
-        // Initially hide the AR scene
+        // Initially hide the AR scene without using display:none
         scene.style.visibility = 'hidden';
 
         // Start AR mode when the button is clicked
@@ -120,19 +120,13 @@
           scene.style.visibility = 'visible';
           uiContainer.style.display = 'none';
 
-          // Activate the WebXR session
-          const xr = scene.querySelector('[xrweb]');
-          if (xr && xr.enterXR) {
-            xr.enterXR('immersive-ar', 'local', {});
+          // Try entering AR session using the native WebXR system
+          const session = scene.enterVR();
 
-            // Forces the AR session to request camera permission
-            navigator.mediaDevices.getUserMedia({ video: true })
-              .then(() => {
-                console.log('Camera permission granted');
-              })
-              .catch((err) => {
-                console.error('Camera permission denied', err);
-              });
+          if (session) {
+            console.log("AR session started successfully");
+          } else {
+            console.error("Failed to start AR session");
           }
         });
 
