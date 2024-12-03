@@ -12,116 +12,102 @@
       margin: 0;
       overflow: hidden;
     }
-
-    /* Style for Start AR Button */
-    #uiContainer {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 9999;
-      text-align: center;
-    }
-
-    #startAR {
-      font-size: 1.5em;
-      background-color: #0077B5;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      padding: 15px 30px;
-      cursor: pointer;
-    }
-
-    #startAR:focus {
-      outline: none;
-    }
   </style>
 </head>
 <body>
-  <!-- UI Container -->
-  <div id="uiContainer">
-    <button id="startAR">Spawn Business Card</button>
-  </div>
-
   <!-- A-Frame Scene -->
   <a-scene 
     embedded 
-    arjs="sourceType: webcam; debugUIEnabled: false;" 
-    id="sceneContainer">
+    arjs="sourceType: webcam; debugUIEnabled: false;">
+
+    <!-- Preload assets -->
+    <a-assets>
+      <a-asset-item 
+        id="businessCardModel" 
+        src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb">
+      </a-asset-item>
+    </a-assets>
+
     <!-- Lighting -->
     <a-light type="ambient" intensity="1"></a-light>
     <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
 
     <!-- Camera -->
-    <a-camera position="0 0 0" wasd-controls-enabled="false" look-controls-enabled="false">
+    <a-camera position="0 1.6 0" wasd-controls-enabled="false" look-controls-enabled="false">
       <a-entity cursor="rayOrigin: touch" raycaster="objects: .interactive"></a-entity>
     </a-camera>
+
+    <!-- Business Card Model -->
+    <a-entity 
+      id="businessCard" 
+      gltf-model="#businessCardModel" 
+      position="0 0 -2" 
+      scale="0.5 0.5 0.5">
+      <!-- Clickable Areas -->
+      <a-plane
+        id="GithubIcon"
+        class="interactive"
+        position="-0.3 0.5 0.05"
+        height="0.2"
+        width="0.2"
+        opacity="0"
+        transparent="true">
+      </a-plane>
+      <a-plane
+        id="LinkedInIcon"
+        class="interactive"
+        position="0 0.5 0.05"
+        height="0.2"
+        width="0.2"
+        opacity="0"
+        transparent="true">
+      </a-plane>
+      <a-plane
+        id="GmailIcon"
+        class="interactive"
+        position="0.3 0.5 0.05"
+        height="0.2"
+        width="0.2"
+        opacity="0"
+        transparent="true">
+      </a-plane>
+    </a-entity>
   </a-scene>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const startARButton = document.getElementById('startAR');
-      const uiContainer = document.getElementById('uiContainer');
-      const scene = document.querySelector('#sceneContainer');
+      const scene = document.querySelector('a-scene');
 
-      // Function to spawn the business card model
-      function spawnBusinessCard() {
-        const businessCard = document.createElement('a-entity');
-        businessCard.setAttribute('id', 'businessCard');
-        businessCard.setAttribute('gltf-model', 'url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb)');
-        businessCard.setAttribute('position', '0 1.5 -2'); // Ensure it's visible and centered
-        businessCard.setAttribute('scale', '0.5 0.5 0.5'); // Adjust for appropriate size
+      // Debugging for model loading
+      const businessCard = document.querySelector('#businessCard');
+      businessCard.addEventListener('model-loaded', () => {
+        console.log('Business card model loaded successfully.');
+      });
+      businessCard.addEventListener('model-error', () => {
+        console.error('Failed to load the business card model.');
+      });
 
-        // Define clickable areas for interactions
-        const clickableIcons = [
-          { id: 'GithubIcon', position: '-0.3 0.5 0.05' },
-          { id: 'LinkedInIcon', position: '0 0.5 0.05' },
-          { id: 'GmailIcon', position: '0.3 0.5 0.05' },
-        ];
+      // Debugging visibility and scene status
+      scene.addEventListener('loaded', () => {
+        console.log('Scene loaded successfully.');
+      });
 
-        clickableIcons.forEach(icon => {
-          const plane = document.createElement('a-plane');
-          plane.setAttribute('id', icon.id);
-          plane.setAttribute('class', 'interactive');
-          plane.setAttribute('position', icon.position);
-          plane.setAttribute('height', '0.2');
-          plane.setAttribute('width', '0.2');
-          plane.setAttribute('opacity', '0');
-          plane.setAttribute('transparent', 'true');
-          businessCard.appendChild(plane);
+      document.querySelectorAll('.interactive').forEach((el) => {
+        el.addEventListener('click', () => {
+          const id = el.id;
+          console.log(`Clicked: ${id}`);
+          switch (id) {
+            case 'GithubIcon':
+              window.open('https://github.com/clay-creates', '_blank');
+              break;
+            case 'LinkedInIcon':
+              window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
+              break;
+            case 'GmailIcon':
+              window.location.href = 'mailto:claycreatesstuff@gmail.com';
+              break;
+          }
         });
-
-        // Add event listeners for clickable areas
-        businessCard.addEventListener('model-loaded', () => {
-          console.log('Business card model loaded successfully.');
-          document.querySelectorAll('.interactive').forEach((el) => {
-            el.addEventListener('click', () => {
-              const id = el.id;
-              console.log(`Clicked: ${id}`);
-              switch (id) {
-                case 'GithubIcon':
-                  window.open('https://github.com/clay-creates', '_blank');
-                  break;
-                case 'LinkedInIcon':
-                  window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
-                  break;
-                case 'GmailIcon':
-                  window.location.href = 'mailto:claycreatesstuff@gmail.com';
-                  break;
-              }
-            });
-          });
-        });
-
-        // Add the model to the scene
-        scene.appendChild(businessCard);
-      }
-
-      // Start AR and spawn model on button click
-      startARButton.addEventListener('click', () => {
-        spawnBusinessCard(); // Spawn the business card model
-        uiContainer.style.display = 'none'; // Hide the start button
       });
     });
   </script>
