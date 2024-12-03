@@ -54,7 +54,7 @@
     <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
 
     <!-- Camera -->
-    <a-camera position="0 1.6 0" wasd-controls-enabled="false" look-controls-enabled="false">
+    <a-camera position="0 0 0" wasd-controls-enabled="false" look-controls-enabled="false">
       <a-entity cursor="rayOrigin: touch" raycaster="objects: .interactive"></a-entity>
     </a-camera>
   </a-scene>
@@ -70,8 +70,8 @@
         const businessCard = document.createElement('a-entity');
         businessCard.setAttribute('id', 'businessCard');
         businessCard.setAttribute('gltf-model', 'url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb)');
-        businessCard.setAttribute('position', '0 0 -2');
-        businessCard.setAttribute('scale', '0.5 0.5 0.5');
+        businessCard.setAttribute('position', '0 1.5 -2'); // Ensure it's visible and centered
+        businessCard.setAttribute('scale', '0.5 0.5 0.5'); // Adjust for appropriate size
 
         // Define clickable areas for interactions
         const clickableIcons = [
