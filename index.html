@@ -50,11 +50,11 @@
   </div>
 
   <!-- A-Frame Scene with AR.js -->
-  <a-scene
+  <a-scene 
     id="sceneContainer"
     embedded
-    arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;">
-    
+    arjs="sourceType: webcam; debugUIEnabled: false;">
+
     <!-- Preload Models -->
     <a-assets>
       <a-asset-item id="businessCardModel" src="assets/models/SchoolBusinessCard.glb"></a-asset-item>
@@ -64,14 +64,15 @@
     <a-light type="ambient" intensity="1"></a-light>
     <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
 
-    <!-- Camera -->
+    <!-- Camera with AR.js -->
     <a-camera 
-      id="camera"
       position="0 1.6 0"
       wasd-controls-enabled="false"
       look-controls-enabled="false"
       fov="80"
-      near="0.01" far="1000"></a-camera>
+      near="0.01"
+      far="1000">
+    </a-camera>
 
     <!-- Business Card Model -->
     <a-entity 
@@ -128,8 +129,6 @@
         // Automatically handle the AR session using AR.js
         const arScene = scene.querySelector('a-scene');
         arScene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
-        
-        // AR.js takes care of the camera permissions and session initialization
       });
 
       // Handle interaction with clickable areas (GitHub, LinkedIn, Gmail)
