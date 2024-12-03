@@ -50,14 +50,14 @@
   </div>
 
   <!-- A-Frame Scene with AR.js -->
-  <a-scene 
-    id="sceneContainer" 
-    embedded 
-    arjs="sourceType: webcam; debugUIEnabled: false;">
-
+  <a-scene
+    id="sceneContainer"
+    embedded
+    arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;">
+    
     <!-- Preload Models -->
     <a-assets>
-      <a-asset-item id="businessCardModel" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/AR-Business-Card-Buttons.glb"></a-asset-item>
+      <a-asset-item id="businessCardModel" src="assets/models/SchoolBusinessCard.glb"></a-asset-item>
     </a-assets>
 
     <!-- Lighting -->
@@ -66,11 +66,12 @@
 
     <!-- Camera -->
     <a-camera 
-      position="0 1.6 0" 
-      wasd-controls-enabled="false" 
-      look-controls-enabled="false">
-      <a-entity cursor="rayOrigin: touch" raycaster="objects: .interactive"></a-entity>
-    </a-camera>
+      id="camera"
+      position="0 1.6 0"
+      wasd-controls-enabled="false"
+      look-controls-enabled="false"
+      fov="80"  <!-- Adjusted FOV to make it more suitable for AR -->
+      near="0.01" far="1000"></a-camera>
 
     <!-- Business Card Model -->
     <a-entity 
