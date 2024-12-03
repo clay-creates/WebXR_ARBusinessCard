@@ -1,169 +1,155 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Clay Jones AR Business Card</title>
-    <!-- Include A-Frame (WebXR compatible) -->
-    <script src="https://aframe.io/releases/1.4.1/aframe.min.js"></script>
-    <script src="https://aframe.io/releases/1.4.1/aframe-xr.min.js"></script>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-      }
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clay Jones AR Business Card</title>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/dev/aframe/build/aframe-ar.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
 
-      /* Style for AR start button */
-      #uiContainer {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 9999;
-        text-align: center;
-      }
+    /* Style for AR start button */
+    #uiContainer {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      text-align: center;
+    }
 
-      #startAR {
-        font-size: 1.5em;
-        background-color: #0077B5;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 15px 30px;
-        cursor: pointer;
-        text-align: center;
-      }
+    #startAR {
+      font-size: 1.5em;
+      background-color: #0077B5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 15px 30px;
+      cursor: pointer;
+      text-align: center;
+    }
 
-      #startAR:focus {
-        outline: none;
-      }
+    #startAR:focus {
+      outline: none;
+    }
 
-      /* Hide the AR scene until AR is activated */
-      #sceneContainer {
-        visibility: hidden; /* Make the scene invisible until AR is activated */
-      }
-    </style>
-  </head>
-  <body>
-    <!-- UI Container -->
-    <div id="uiContainer">
-      <button id="startAR">Enter AR</button>
-    </div>
+    /* Hide the AR scene until AR is activated */
+    #sceneContainer {
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+  <!-- UI Container -->
+  <div id="uiContainer">
+    <button id="startAR">Enter AR</button>
+  </div>
 
-    <!-- A-Frame Scene -->
-    <a-scene id="sceneContainer" embedded xrweb>
-      <!-- Preload Models -->
-      <a-assets>
-        <a-asset id="businessCardModel" 
-          gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/AR-Business-Card-Buttons.glb)">
-        </a-asset>
-      </a-assets>
+  <!-- A-Frame Scene with AR.js -->
+  <a-scene 
+    id="sceneContainer" 
+    embedded 
+    arjs="sourceType: webcam; debugUIEnabled: false;">
 
-      <!-- Lighting -->
-      <a-light type="ambient" intensity="1"></a-light>
-      <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
+    <!-- Preload Models -->
+    <a-assets>
+      <a-asset-item id="businessCardModel" src="assets/models/SchoolBusinessCard.glb"></a-asset-item>
+    </a-assets>
 
-      <!-- Camera -->
-      <a-camera position="0 1.6 0" wasd-controls-enabled="false" look-controls-enabled="false">
-        <a-entity cursor="rayOrigin: touch" raycaster="objects: .interactive"></a-entity>
-      </a-camera>
+    <!-- Lighting -->
+    <a-light type="ambient" intensity="1"></a-light>
+    <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
 
-      <!-- Business Card Model -->
-      <a-entity 
-        id="businessCard" 
-        gltf-model="#businessCardModel"
-        scale="0.5 0.5 0.5" 
-        position="0 0 -2" 
-        rotation="0 0 0">
-        <!-- Clickable Areas -->
-        <a-plane
-          id="GithubIcon"
-          class="interactive"
-          position="-0.3 0.5 0.05"
-          height="0.2"
-          width="0.2"
-          opacity="0"
-          transparent="true">
-        </a-plane>
-        <a-plane
-          id="LinkedInIcon"
-          class="interactive"
-          position="0 0.5 0.05"
-          height="0.2"
-          width="0.2"
-          opacity="0"
-          transparent="true">
-        </a-plane>
-        <a-plane
-          id="GmailIcon"
-          class="interactive"
-          position="0.3 0.5 0.05"
-          height="0.2"
-          width="0.2"
-          opacity="0"
-          transparent="true">
-        </a-plane>
-      </a-entity>
-    </a-scene>
+    <!-- Camera -->
+    <a-camera 
+      position="0 1.6 0" 
+      wasd-controls-enabled="false" 
+      look-controls-enabled="false">
+      <a-entity cursor="rayOrigin: touch" raycaster="objects: .interactive"></a-entity>
+    </a-camera>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const startARButton = document.getElementById('startAR');
-        const uiContainer = document.getElementById('uiContainer');
-        const scene = document.querySelector('#sceneContainer');
+    <!-- Business Card Model -->
+    <a-entity 
+      id="businessCard" 
+      gltf-model="#businessCardModel" 
+      position="0 0 -2" 
+      scale="0.5 0.5 0.5">
+      <!-- Clickable Areas -->
+      <a-plane
+        id="GithubIcon"
+        class="interactive"
+        position="-0.3 0.5 0.05"
+        height="0.2"
+        width="0.2"
+        opacity="0"
+        transparent="true">
+      </a-plane>
+      <a-plane
+        id="LinkedInIcon"
+        class="interactive"
+        position="0 0.5 0.05"
+        height="0.2"
+        width="0.2"
+        opacity="0"
+        transparent="true">
+      </a-plane>
+      <a-plane
+        id="GmailIcon"
+        class="interactive"
+        position="0.3 0.5 0.05"
+        height="0.2"
+        width="0.2"
+        opacity="0"
+        transparent="true">
+      </a-plane>
+    </a-entity>
+  </a-scene>
 
-        // Initially hide the AR scene
-        scene.style.visibility = 'hidden';
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const startARButton = document.getElementById('startAR');
+      const uiContainer = document.getElementById('uiContainer');
+      const scene = document.querySelector('#sceneContainer');
 
-        // Start AR mode when the button is clicked
-        startARButton.addEventListener('click', async () => {
-          // Show the AR scene and hide the button
-          scene.style.visibility = 'visible';
-          uiContainer.style.display = 'none';
+      // Initially hide the AR scene
+      scene.style.visibility = 'hidden';
 
-          try {
-            // Start immersive AR session
-            const session = await scene.enterXR('immersive-ar', 'local', {});
+      // Start AR mode when the button is clicked
+      startARButton.addEventListener('click', () => {
+        // Show the AR scene and hide the button
+        scene.style.visibility = 'visible';
+        uiContainer.style.display = 'none';
 
-            // If the session starts successfully, log success
-            console.log("AR session started successfully");
+        // Automatically handle the AR session using AR.js
+        const arScene = scene.querySelector('a-scene');
+        arScene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
+        
+        // AR.js takes care of the camera permissions and session initialization
+      });
 
-            // Ensure the camera is enabled and accessible for the AR session
-            const cameraElement = scene.querySelector('a-camera');
-            cameraElement.setAttribute('position', '0 1.6 0'); // Adjust camera height if needed
-
-          } catch (error) {
-            console.error("Failed to start AR session", error);
+      // Handle interaction with clickable areas (GitHub, LinkedIn, Gmail)
+      document.querySelectorAll('.interactive').forEach((el) => {
+        el.addEventListener('click', () => {
+          const id = el.id;
+          console.log(`Clicked: ${id}`);
+          switch (id) {
+            case 'GithubIcon':
+              window.open('https://github.com/clay-creates', '_blank');
+              break;
+            case 'LinkedInIcon':
+              window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
+              break;
+            case 'GmailIcon':
+              window.location.href = 'mailto:claycreatesstuff@gmail.com';
+              break;
           }
         });
-
-        // Debugging for model loading and interactions
-        const businessCard = document.querySelector('#businessCard');
-        businessCard.addEventListener('model-loaded', () =>
-          console.log('Business card model loaded successfully')
-        );
-        businessCard.addEventListener('model-error', () =>
-          console.error('Failed to load business card model')
-        );
-
-        // Handle interaction with clickable areas
-        document.querySelectorAll('.interactive').forEach((el) => {
-          el.addEventListener('click', () => {
-            const id = el.id;
-            console.log(`Clicked: ${id}`);
-            switch (id) {
-              case 'GithubIcon':
-                window.open('https://github.com/clay-creates', '_blank');
-                break;
-              case 'LinkedInIcon':
-                window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
-                break;
-              case 'GmailIcon':
-                window.location.href = 'mailto:claycreatesstuff@gmail.com';
-                break;
-            }
-          });
-        });
       });
-    </script>
-  </body>
+    });
+  </script>
+</body>
 </html>
