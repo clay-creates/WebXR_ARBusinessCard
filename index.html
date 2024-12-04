@@ -46,35 +46,5 @@
         
     </a-scene>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        // Debugging for model loading and interactions
-        const businessCard = document.querySelector('#businessCard');
-        businessCard.addEventListener('model-loaded', () =>
-          console.log('Business card model loaded successfully')
-        );
-        businessCard.addEventListener('model-error', () =>
-          console.error('Failed to load business card model')
-        );
-
-        document.querySelectorAll('.interactive').forEach((el) => {
-          el.addEventListener('click', () => {
-            const id = el.id;
-            console.log(`Clicked: ${id}`);
-            switch (id) {
-              case 'GithubIcon':
-                window.open('https://github.com/clay-creates', '_blank');
-                break;
-              case 'LinkedInIcon':
-                window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
-                break;
-              case 'GmailIcon':
-                window.location.href = 'mailto:claycreatesstuff@gmail.com';
-                break;
-            }
-          });
-        });
-      });
-    </script>
   </body>
 </html>
