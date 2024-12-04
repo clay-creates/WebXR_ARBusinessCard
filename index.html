@@ -17,7 +17,7 @@
 
     <!-- A-Frame Scene with AR.js -->
     <a-scene 
-      arjs
+      arjs="sourceType: webcam;"
       embedded
       vr-mode-ui="enabled: false"
       renderer="logarithmicDepthBuffer: true; antialias: true; alpha: true">
@@ -39,8 +39,8 @@
       <!-- Business Card Model -->
       <a-entity
         gltf-model="#businessCard" 
-        scale="0.5 0.5 0.5" 
-        position="0 0 -2" 
+        scale="1 1 1" 
+        position="0 0 -1" 
         rotation="0 0 0">
         <!-- Clickable Areas -->
         <a-plane
