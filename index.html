@@ -11,26 +11,34 @@
         margin: 0;
         overflow: hidden;
       }
-
     </style>
   </head>
   <body>
 
-    <!-- A-Frame Scene -->
-    <a-scene embedded id="sceneContainer">
+    <!-- A-Frame Scene with AR.js -->
+    <a-scene 
+      arjs
+      embedded
+      vr-mode-ui="enabled: false"
+      renderer="logarithmicDepthBuffer: true; antialias: true; alpha: true">
+      
       <!-- Lighting -->
       <a-light type="ambient" intensity="1"></a-light>
       <a-light type="directional" position="1 4 -2" intensity="2" color="#ffffff"></a-light>
 
       <!-- Camera -->
-      <a-camera position="0 1.6 0" wasd-controls-enabled="false" look-controls-enabled="false">
+      <a-camera position="0 1.6 0" look-controls-enabled="false">
         <a-entity cursor="rayOrigin: touch" raycaster="objects: .interactive"></a-entity>
       </a-camera>
 
+      <!-- Preload Business Card Model -->
+      <a-assets>
+        <a-asset-item id="businessCard" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb"></a-asset-item>
+      </a-assets>
+
       <!-- Business Card Model -->
-      <a-entity 
-        id="businessCard" 
-        gltf-model="url(https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Models/AR-Business-Card-Buttons.glb)" 
+      <a-entity
+        gltf-model="#businessCard" 
         scale="0.5 0.5 0.5" 
         position="0 0 -2" 
         rotation="0 0 0">
@@ -67,9 +75,14 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const uiContainer = document.getElementById('uiContainer');
-        const scene = document.querySelector('#sceneContainer');
-        let arSession = null;
+        // Debugging for model loading and interactions
+        const businessCard = document.querySelector('#businessCard');
+        businessCard.addEventListener('model-loaded', () =>
+          console.log('Business card model loaded successfully')
+        );
+        businessCard.addEventListener('model-error', () =>
+          console.error('Failed to load business card model')
+        );
 
         document.querySelectorAll('.interactive').forEach((el) => {
           el.addEventListener('click', () => {
@@ -88,6 +101,7 @@
             }
           });
         });
+      });
     </script>
   </body>
 </html>
