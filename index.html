@@ -71,42 +71,6 @@
         const scene = document.querySelector('#sceneContainer');
         let arSession = null;
 
-        // Reset scene attributes on page load
-        scene.removeAttribute('arjs'); // Remove AR.js attribute initially
-
-          // Access AR.js session after initialization
-          scene.addEventListener('loaded', () => {
-            const arSystem = scene.systems['arjs'];
-            if (arSystem && arSystem.arToolkitSource) {
-              arSession = arSystem.arToolkitSource.domElement;
-            }
-          });
-        });
-
-        // Clean up AR.js session on page unload
-        window.addEventListener('beforeunload', () => {
-          if (arSession) {
-            console.log('Stopping AR.js session...');
-            arSession.stop(); // Stop the AR.js camera session
-          }
-
-          const arToolkitSource = scene.systems['arjs'].arToolkitSource;
-          if (arToolkitSource && arToolkitSource.domElement) {
-            console.log('Stopping AR.js video stream...');
-            const videoTracks = arToolkitSource.domElement.srcObject.getTracks();
-            videoTracks.forEach(track => track.stop()); // Stop video tracks explicitly
-          }
-        });
-
-        // Debugging for model loading and interactions
-        const businessCard = document.querySelector('#businessCard');
-        businessCard.addEventListener('model-loaded', () =>
-          console.log('Business card model loaded successfully')
-        );
-        businessCard.addEventListener('model-error', () =>
-          console.error('Failed to load business card model')
-        );
-
         document.querySelectorAll('.interactive').forEach((el) => {
           el.addEventListener('click', () => {
             const id = el.id;
