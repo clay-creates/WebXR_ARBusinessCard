@@ -19,8 +19,7 @@
     <a-scene 
       arjs="sourceType: webcam;"
       embedded
-      vr-mode-ui="enabled: false"
-      renderer="logarithmicDepthBuffer: true; antialias: true; alpha: true">
+      vr-mode-ui="enabled: false">
       
       <!-- Lighting -->
       <a-light type="ambient" intensity="1"></a-light>
@@ -39,7 +38,7 @@
       <!-- Business Card Model -->
       <a-entity
         gltf-model="#businessCard" 
-        scale="0.01 0.01 0.01" 
+        scale="0.5 0.5 0.5" 
         position="0 0 -2" 
         rotation="90 0 0"
         visible="true">
