@@ -17,11 +17,11 @@
 
     <!-- A-Frame Scene with AR.js -->
     <a-scene 
-      arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
+      arjs="sourceType: webcam; debugUIEnabled: false;"
       embedded
       vr-mode-ui="enabled: false"
       cursor="rayOrigin: mouse"
-      raycaster="objects: .interactive">
+      raycaster="objects: .clickable">
 
       <!-- Camera -->
       <a-camera
@@ -43,7 +43,7 @@
        src="#GithubIcon"
        position="-1 -0.25 -6"
        scale="0.25 0.25 0.25"
-       class="interactive"
+       class="clickable"
        id="githubLink">
       </a-image>
 
@@ -51,7 +51,7 @@
        src="#LinkedInIcon"
        position="-0.15 0.35 -6"
        scale="0.35 0.35 0.35"
-       class="interactive"
+       class="clickable"
        id="linkedinLink">
       </a-image>
 
@@ -59,7 +59,7 @@
        src="#GmailIcon"
        position="0 -0.35 -6"
        scale="0.22 0.22 0.22"
-       class="interactive"
+       class="clickable"
        id="gmailLink">
       </a-image>
 
@@ -67,7 +67,7 @@
        src="#ClayCreatesLogo"
        position="-1 0.25 -6"
        scale="0.5 0.5 0.5"
-       class="interactive"
+       class="clickable"
        id="clayCreatesLink">
       </a-image>
 
