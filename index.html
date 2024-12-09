@@ -20,7 +20,7 @@
       arjs="sourceType: webcam; debugUIEnabled: false; trackingMethod: best;"
       embedded
       vr-mode-ui="enabled: false"
-      cursor="rayOrigin: touch"
+      cursor="rayOrigin: click"
       raycaster="objects: .interactive">
 
       <!-- Camera -->
@@ -89,7 +89,11 @@
         function addSocialTouchListener(selector, url) {
           const button = document.querySelector(selector);
           if (button) {
-            button.addEventListener('touch', () => {
+            button.addEventListener('touchstart', () => {
+              window.open(url, '_blank');
+            });
+
+            button.addEventListener('click', () => {
               window.open(url, '_blank');
             });
           } else {
