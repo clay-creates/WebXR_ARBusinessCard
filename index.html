@@ -42,7 +42,7 @@
       <!-- Social Links -->
        <a-image
        src="#GithubIcon"
-       position="-1 0 -6"
+       position="-1 -0.35 -6"
        scale="0.25 0.25 0.25"
        class="interactive"
        id="githubLink">
@@ -50,7 +50,7 @@
 
       <a-image
        src="#LinkedInIcon"
-       position="0 0.5 -6"
+       position="0 0.35 -6"
        scale="0.35 0.35 0.35"
        class="interactive"
        id="linkedinLink">
@@ -58,7 +58,7 @@
 
       <a-image
        src="#GmailIcon"
-       position="0 -0.5 -6"
+       position="0 -0.35 -6"
        scale="0.25 0.25 0.25"
        class="interactive"
        id="gmailLink">
@@ -66,7 +66,7 @@
 
       <a-image
        src="#ClayCreatesLogo"
-       position="1 0.5 -6"
+       position="-1 0.35 -6"
        scale="0.5 0.5 0.5"
        class="interactive"
        id="clayCreatesLink">
@@ -90,8 +90,6 @@
           const button = document.querySelector(selector);
           if (button) {
             button.addEventListener('click', (event) => {
-              event.preventDefault();
-              event.stopPropagation();
               window.open(url, '_blank');
             });
           } else {
