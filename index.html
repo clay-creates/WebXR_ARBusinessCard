@@ -85,21 +85,23 @@
     </a-scene>
 
     <script>
-      // Javascript to handle user touch interactions
-      document.querySelector('#githubLink').addEventListener('click', function () {
-        window.open('https://github.com/clay-creates', '_blank');
-      });
+      document.addEventListener('DOMContentLoaded', () => {
+        function addSocialTouchListener(selector, url) {
+          const button = document.querySelector(selector);
+          if (button) {
+            button.addEventListener('touch', () => {
+              window.open(url, '_blank');
+            });
+          } else {
+            console.error('Button not found.');
+          }
+        }
 
-      document.querySelector('#linkedinLink').addEventListener('click', function () {
-        window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
-      });
-
-      document.querySelector('#gmailLink').addEventListener('click', function () {
-        window.open('mailto:claycreatesstuff@gmail.com', '_blank');
-      });
-
-      document.querySelector('#clayCreatesLink').addEventListener('click', function () {
-        window.open('https://claycreatesstuff.wordpress.com/', '_blank');
+        // Add listeners to buttons
+        addSocialTouchListener('#githubLink', 'https://github.com/clay-creates');
+        addSocialTouchListener('#linkedinLink', 'https://www.linkedin.com/in/clay-creates/');
+        addSocialTouchListener('#gmailLink', 'mailto:claycreatesstuff@gmail.com');
+        addSocialTouchListener('#clayCreatesLink', 'https://claycreatesstuff.wordpress.com/');
       });
     </script>
 
