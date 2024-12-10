@@ -84,22 +84,32 @@
     </a-scene>
 
     <script>
-      document.querySelector('#github').addEventListener('click', function () {
-        window.open('https://github.com/clay-creates', '_blank');
-      });
-
-      document.querySelector('#linkedin').addEventListener('click', function () {
-        window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
-      });
-
-      document.querySelector('#gmail').addEventListener('click', function () {
-        window.open('mailto:claycreatesstuff@gmail.com', '_blank');
-      });
-
-      document.querySelector('#clayCreates').addEventListener('click', function () {
-        window.open('https://claycreatesstuff.wordpress.com/', '_blank');
+      document.addEventListener('DOMContentLoaded', () => {
+        // Map element IDs to their URLs
+        const linkMappings = {
+          github: 'https://github.com/clay-creates',
+          linkedin: 'https://www.linkedin.com/in/clay-creates/',
+          gmail: 'mailto:claycreatesstuff@gmail.com',
+          clayCreates: 'https://claycreatesstuff.wordpress.com/'
+        };
+    
+        // Attach event listeners to each interactive element
+        Object.keys(linkMappings).forEach((id) => {
+          const element = document.getElementById(id);
+          if (element) {
+            element.addEventListener('click', (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              console.log(`Opening URL: ${linkMappings[id]}`);
+              window.open(linkMappings[id], '_blank'); // Open the link in a new tab
+            });
+          } else {
+            console.error(`Element with ID ${id} not found.`);
+          }
+        });
       });
     </script>
+    
 
   </body>
 </html>
