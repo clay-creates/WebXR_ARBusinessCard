@@ -97,7 +97,7 @@
         Object.keys(linkMappings).forEach((id) => {
           const element = document.getElementById(id);
           if (element) {
-            element.addEventListener('click', (event) => {
+            element.addEventListener('click', () => {
               window.open(linkMappings[id], '_blank');
             });
           } else {
