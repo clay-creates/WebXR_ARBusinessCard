@@ -84,25 +84,23 @@
 
     <script>
      document.addEventListener('DOMContentLoaded', () => {
-      function addClickListener(selector, url) {
-        const icon = document.querySelector(selector);
-        if (icon) {
-          icon.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent other interactions
-            event.stopPropagation(); // Stop event bubbling
-            console.log(`Opening URL: ${url}`);
-            window.open(url, '_blank'); // Open the link
+      const linkMappings = {
+        github: 'https://github.com/clay-creates',
+        linkedin: 'https://www.linkedin.com/in/clay-creates/',
+        gmail: 'mailto:claycreatesstuff@gmail.com',
+        clayCreates: 'https://claycreatesstuff.wordpress.com/'
+      };
+
+      Object.keys(linkMappings).forEach((id) => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.addEventListener('raycaster-intersected', () => {
+            window.open(linkMappings[id], '_blank');
           });
         } else {
-          console.error(`Icon not found for selector: ${selector}`);
+          console.error('Element with ID ${id} not found.');
         }
-      }
-
-      // Add listeners
-      addClickListener('#github', 'https://github.com/clay-creates');
-      addClickListener('#linkedin', 'https://www.linkedin.com/in/clay-creates/');
-      addClickListener('#gmail', 'mailto:claycreatesstuff@gmail.com');
-      addClickListener('#clayCreates', 'https://claycreatesstuff.wordpress.com/');
+      });
     });
     </script>
 
