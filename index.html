@@ -38,37 +38,41 @@
       </a-assets>
 
       <!-- Social Links -->
-      <a-image
-        src="#GithubIcon"
+      <a-link
+        href="https://github.com/clay-creates"
+        title="GitHub"
+        image="#GithubIcon"
         position="-1 -0.25 -6"
-        scale="0.25 0.25 0.25"
         class="clickable"
-        id="github">
-      </a-image>
+        scale="0.8 0.8 0.8">
+      </a-link>
 
-      <a-image
-        src="#LinkedInIcon"
+      <a-link
+        href="https://www.linkedin.com/in/clay-creates/"
+        title="LinkedIn"
+        image="#LinkedInIcon"
         position="-0.15 0.35 -6"
-        scale="0.35 0.35 0.35"
         class="clickable"
-        id="linkedin">
-      </a-image>
+        scale="0.8 0.8 0.8">
+      </a-link>
 
-      <a-image
-        src="#GmailIcon"
+      <a-link
+        href="mailto:claycreatesstuff@gmail.com"
+        title="Email"
+        image="#GmailIcon"
         position="0 -0.35 -6"
-        scale="0.22 0.22 0.22"
         class="clickable"
-        id="gmail">
-      </a-image>
+        scale="0.8 0.8 0.8">
+      </a-link>
 
-      <a-image
-        src="#ClayCreatesLogo"
+      <a-link
+        href="https://claycreatesstuff.wordpress.com/"
+        title="Portfolio"
+        image="#ClayCreatesLogo"
         position="-1 0.25 -6"
-        scale="0.5 0.5 0.5"
         class="clickable"
-        id="clayCreates">
-      </a-image>
+        scale="0.8 0.8 0.8">
+      </a-link>
 
       <!-- Business Card Model -->
       <a-entity
@@ -81,31 +85,6 @@
       </a-entity>
         
     </a-scene>
-
-    <script>
-     document.addEventListener('DOMContentLoaded', () => {
-      const linkMappings = {
-        github: 'https://github.com/clay-creates',
-        linkedin: 'https://www.linkedin.com/in/clay-creates/',
-        gmail: 'mailto:claycreatesstuff@gmail.com',
-        clayCreates: 'https://claycreatesstuff.wordpress.com/'
-      };
-
-      Object.keys(linkMappings).forEach((id) => {
-          const element = document.getElementById(id);
-          if (element) {
-            element.addEventListener('click', (event) => {
-              event.preventDefault();
-              event.stopPropagation();
-              console.log(`Opening URL: ${linkMappings[id]}`);
-              window.open(linkMappings[id], '_blank');
-          });
-        } else {
-          console.error('Element with ID ${id} not found.');
-        }
-      });
-    });
-    </script>
 
   </body>
 </html>
