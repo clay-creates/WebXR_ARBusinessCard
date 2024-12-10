@@ -43,7 +43,7 @@
         position="-1 -0.25 -6"
         scale="0.25 0.25 0.25"
         class="clickable"
-        link="href: https://github.com/clay-creates; title: Github;">
+        id="github">
       </a-image>
 
       <a-image
@@ -51,7 +51,7 @@
         position="-0.15 0.35 -6"
         scale="0.35 0.35 0.35"
         class="clickable"
-        link="href: https://www.linkedin.com/in/clay-creates/; title: LinkedIn;">
+        id="linkedin">
       </a-image>
 
       <a-image
@@ -59,7 +59,7 @@
         position="0 -0.35 -6"
         scale="0.22 0.22 0.22"
         class="clickable"
-        link="href: mailto:claycreatesstuff@gmail.com; title: Email;">
+        id="gmail">
       </a-image>
 
       <a-image
@@ -67,7 +67,7 @@
         position="-1 0.25 -6"
         scale="0.5 0.5 0.5"
         class="clickable"
-        link="href: https://claycreatesstuff.wordpress.com; title: Portfolio;">
+        id="clayCreates">
       </a-image>
 
       <!-- Business Card Model -->
@@ -81,6 +81,24 @@
       </a-entity>
         
     </a-scene>
+
+    <script>
+      document.querySelector('#github').addEventListener('click', function () {
+        window.open('https://github.com/clay-creates', '_blank');
+      });
+
+      document.querySelector('#linkedin').addEventListener('click', function () {
+        window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
+      });
+
+      document.querySelector('#gmail').addEventListener('click', function () {
+        window.open('mailto:claycreatesstuff@gmail.com', '_blank');
+      });
+
+      document.querySelector('#clayCreates').addEventListener('click', function () {
+        window.open('https://claycreatesstuff.wordpress.com/', '_blank');
+      });
+    </script>
 
   </body>
 </html>
