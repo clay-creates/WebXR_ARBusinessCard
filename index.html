@@ -30,7 +30,7 @@
 
       <!-- Preload Image Assets -->
       <a-assets>
-        <a-image id="GitubIcon" src="https://raw.githack.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/github-white.png"></a-image>
+        <img id="GitubIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/github-white.png"></img>
         <a-image id="LinkedInIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/linkedin-white.png"></a-image>
         <a-image id="GmailIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/gmail-white.png"></a-image>
 
@@ -44,7 +44,7 @@
        position="-1 -0.25 -6"
        scale="0.25 0.25 0.25"
        class="clickable"
-       id="githubLink">
+       id="github">
       </a-image>
 
       <a-image
@@ -52,7 +52,7 @@
        position="-0.15 0.35 -6"
        scale="0.35 0.35 0.35"
        class="clickable"
-       id="linkedinLink">
+       id="linkedin">
       </a-image>
 
       <a-image
@@ -60,7 +60,7 @@
        position="0 -0.35 -6"
        scale="0.22 0.22 0.22"
        class="clickable"
-       id="gmailLink">
+       id="gmail">
       </a-image>
 
       <a-image
@@ -68,7 +68,7 @@
        position="-1 0.25 -6"
        scale="0.5 0.5 0.5"
        class="clickable"
-       id="clayCreatesLink">
+       id="clayCreates">
       </a-image>
 
       <!-- Business Card Model -->
@@ -84,31 +84,25 @@
     </a-scene>
 
     <script>
-     // Prevent screen dragging
-     document.querySelector('a-scene').addEventListener('mousedown', function (event) {
-      event.preventDefault();
-     });
+     document.addEventListener('DOMContentLoaded', () => {
+      function addClickListener(selector, url) {
+        const icon = document.querySelector(selector);
+        if (icon) {
+          icon.addEventListener('click', () => {
+            console.log(`Opening URL: ${url}`);
+            window.open(url, '_blank');
+          });
+        } else {
+          console.error(`Icon not found for selector: ${selector}`);
+        }
+      }
 
-     document.querySelector('a-scene').addEventListener('touchstart', function (event) {
-      event.preventDefault();
-     });
-
-     // Javascript to handle user touch interactions
-     document.querySelector('#githubLink').addEventListener('click', function () {
-      window.open('https://github.com/clay-creates', '_blank');
-     });
-
-     document.querySelector('#linkedinLink').addEventListener('click', function () {
-      window.open('https://www.linkedin.com/in/clay-creates/', '_blank');
-     });
-
-     document.querySelector('#gmailLink').addEventListener('click', function () {
-      window.open('mailto:claycreatesstuff@gmail.com', '_blank');
-     });
-
-     document.querySelector('#clayCreatesLink').addEventListener('click', function () {
-      window.open('https://claycreatesstuff.wordpress.com/', '_blank');
-     });
+      // add listeners
+      addClickListener('#github', 'https://github.com/clay-creates');
+      addClickListener('#linkedin', 'https://www.linkedin.com/in/clay-creates/');
+      addClickListener('#gmail', 'mailto:claycreatesstuff@gmail.com');
+      addClickListener('clayCreates', 'https://claycreatesstuff.wordpress.com/');
+    });
     </script>
 
   </body>
