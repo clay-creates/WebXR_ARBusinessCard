@@ -25,50 +25,49 @@
 
       <!-- Camera -->
       <a-camera
-        position="0 0 0">
+        position="0 0 0"
+        wasd-controls-enabled="false">
       </a-camera>
 
       <!-- Preload Image Assets -->
       <a-assets>
-        <img id="GitubIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/github-white.png"></img>
-        <a-image id="LinkedInIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/linkedin-white.png"></a-image>
-        <a-image id="GmailIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/gmail-white.png"></a-image>
-
-        <!-- Preload Card Logo -->
-        <a-image id="ClayCreatesLogo" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/Clay-Creates-Logo.png"></a-image>
+        <img id="GithubIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/github-white.png">
+        <img id="LinkedInIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/linkedin-white.png">
+        <img id="GmailIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/gmail-white.png">
+        <img id="ClayCreatesLogo" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/Clay-Creates-Logo.png">
       </a-assets>
 
       <!-- Social Links -->
-       <a-image
-       src="#GithubIcon"
-       position="-1 -0.25 -6"
-       scale="0.25 0.25 0.25"
-       class="clickable"
-       id="github">
+      <a-image
+        src="#GithubIcon"
+        position="-1 -0.25 -6"
+        scale="0.25 0.25 0.25"
+        class="clickable"
+        id="github">
       </a-image>
 
       <a-image
-       src="#LinkedInIcon"
-       position="-0.15 0.35 -6"
-       scale="0.35 0.35 0.35"
-       class="clickable"
-       id="linkedin">
+        src="#LinkedInIcon"
+        position="-0.15 0.35 -6"
+        scale="0.35 0.35 0.35"
+        class="clickable"
+        id="linkedin">
       </a-image>
 
       <a-image
-       src="#GmailIcon"
-       position="0 -0.35 -6"
-       scale="0.22 0.22 0.22"
-       class="clickable"
-       id="gmail">
+        src="#GmailIcon"
+        position="0 -0.35 -6"
+        scale="0.22 0.22 0.22"
+        class="clickable"
+        id="gmail">
       </a-image>
 
       <a-image
-       src="#ClayCreatesLogo"
-       position="-1 0.25 -6"
-       scale="0.5 0.5 0.5"
-       class="clickable"
-       id="clayCreates">
+        src="#ClayCreatesLogo"
+        position="-1 0.25 -6"
+        scale="0.5 0.5 0.5"
+        class="clickable"
+        id="clayCreates">
       </a-image>
 
       <!-- Business Card Model -->
@@ -88,20 +87,22 @@
       function addClickListener(selector, url) {
         const icon = document.querySelector(selector);
         if (icon) {
-          icon.addEventListener('click', () => {
+          icon.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent other interactions
+            event.stopPropagation(); // Stop event bubbling
             console.log(`Opening URL: ${url}`);
-            window.open(url, '_blank');
+            window.open(url, '_blank'); // Open the link
           });
         } else {
           console.error(`Icon not found for selector: ${selector}`);
         }
       }
 
-      // add listeners
+      // Add listeners
       addClickListener('#github', 'https://github.com/clay-creates');
       addClickListener('#linkedin', 'https://www.linkedin.com/in/clay-creates/');
       addClickListener('#gmail', 'mailto:claycreatesstuff@gmail.com');
-      addClickListener('clayCreates', 'https://claycreatesstuff.wordpress.com/');
+      addClickListener('#clayCreates', 'https://claycreatesstuff.wordpress.com/');
     });
     </script>
 
