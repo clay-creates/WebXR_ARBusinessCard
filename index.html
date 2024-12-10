@@ -92,10 +92,13 @@
       };
 
       Object.keys(linkMappings).forEach((id) => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.addEventListener('raycaster-intersected', () => {
-            window.open(linkMappings[id], '_blank');
+          const element = document.getElementById(id);
+          if (element) {
+            element.addEventListener('click', (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              console.log(`Opening URL: ${linkMappings[id]}`);
+              window.open(linkMappings[id], '_blank');
           });
         } else {
           console.error('Element with ID ${id} not found.');
