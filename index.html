@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <title>Clay Jones AR Business Card</title>
     <!-- Include A-Frame and AR.js -->
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
@@ -20,9 +21,8 @@
       arjs="sourceType: webcam; debugUIEnabled: false;"
       embedded
       vr-mode-ui="enabled: false"
-      cursor="rayOrigin: touch"
-      touch-raycaster="objects: .clickable"
-      webxr="optionalFeatures: hit-test,dom-overlay;">
+      cursor="rayOrigin: mouse"
+      raycaster="objects: .clickable">
 
       <!-- Camera -->
       <a-camera
@@ -32,10 +32,10 @@
 
       <!-- Preload Image Assets -->
       <a-assets>
-        <img id="GithubIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/github-white.png">
-        <img id="LinkedInIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/linkedin-white.png">
-        <img id="GmailIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/gmail-white.png">
-        <img id="ClayCreatesLogo" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/Clay-Creates-Logo.png">
+        <img id="GithubIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/github-white.png" alt="Github Icon">
+        <img id="LinkedInIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/linkedin-white.png" alt="LinkedIn Icon">
+        <img id="GmailIcon" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/gmail-white.png" alt="Gmail Icon">
+        <img id="ClayCreatesLogo" src="https://raw.githubusercontent.com/clay-creates/WebXR_ARBusinessCard/A-Frame-Build/Assets/Clay-Creates-Logo.png" alt="Clay Creates Icon">
       </a-assets>
 
       <!-- Social Links -->
@@ -84,26 +84,22 @@
     </a-scene>
 
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        // Map element IDs to their URLs
-        const linkMappings = {
-          github: 'https://github.com/clay-creates',
-          linkedin: 'https://www.linkedin.com/in/clay-creates/',
-          gmail: 'mailto:claycreatesstuff@gmail.com',
-          clayCreates: 'https://claycreatesstuff.wordpress.com/'
-        };
-    
-        // Attach event listeners to each interactive element
-        Object.keys(linkMappings).forEach((id) => {
-          const element = document.getElementById(id);
-          if (element) {
-            element.addEventListener('click', () => {
-              window.open(linkMappings[id], '_blank');
-            });
-          } else {
-            console.error(`Element with ID ${id} not found.`);
-          }
-        });
+
+      // Add click event listeners to social links
+      document.querySelector('#github').addEventListener('click', () => {
+        window.open('https://github.com/clay-creates', '_blank');
+      });
+
+      document.querySelector('#linkedin').addEventListener('click', () => {
+        window.open('https://www.linkedin.com/in/clay-jones-ux/', '_blank');
+      });
+
+      document.querySelector('#gmail').addEventListener('click', () => {
+        window.location.href = 'mailto:claycreatesstuff@gmail.com';
+      });
+
+      document.querySelector('#clayCreates').addEventListener('click', () => {
+        window.open('https://claycreatesstuff.com', '_blank');
       });
     </script>
     
