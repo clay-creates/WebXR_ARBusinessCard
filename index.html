@@ -84,6 +84,11 @@
     </a-scene>
 
     <script>
+      // Adjust cursor rayOrigin based on device
+      const cursor = document.querySelector('a-scene').components.cursor;
+      if (AFRAME.utils.device.isMobile()) {
+        cursor.data.rayOrigin = 'touch';
+      }
 
       // Add click event listeners to social links
       document.querySelector('#github').addEventListener('click', () => {
