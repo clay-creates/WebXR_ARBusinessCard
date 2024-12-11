@@ -5,15 +5,14 @@ This project is an interactive **WebXR Augmented Reality (AR) Business Card** th
 
 ## **Features**
 - **Interactive AR Experience:** Display a 3D business card in augmented reality.
-- **Social Links:** Clickable 3D icons to access GitHub, LinkedIn, and email.
+- **Social Links:** Clickable 3D icons to access GitHub, LinkedIn, email, and personal website.
 - **Seamless Access:** Open the experience directly from a browser using the QR code.
-- **WebXR Technology:** Built with Three.js and GLTFLoader to create a lightweight and accessible AR experience.
+- **WebXR Technology:** Built with AFrame and ARJS to create a lightweight and accessible AR experience.
 
 ## **Technologies Used**
 - **[WebXR API](https://immersive-web.github.io/webxr/):** Provides browser-based AR functionality.
-- **[Three.js](https://threejs.org/):** A JavaScript library for rendering 3D objects.
-- **[GLTFLoader](https://threejs.org/docs/#examples/en/loaders/GLTFLoader):** Used for loading 3D models in `.glb` format.
-
+- **[AFrame](https://aframe.io/):** A web framework for building 3D and AR experiences.
+- **[AR.js](https://github.com/AR-js-org/AR.js):** Lightweight AR library for AFrame and WebXR integration.
 
 ## **Accessing the Experience**
 You can access the AR Business Card experience directly by scanning the QR code below with your device:
