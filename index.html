@@ -22,12 +22,18 @@
       embedded
       vr-mode-ui="enabled: false"
       cursor="rayOrigin: mouse"
-      raycaster="objects: .clickable">
+      raycaster="objects: .clickable; showLine: true;">
 
       <!-- Camera -->
       <a-camera
         position="0 0 0"
         look-controls="touchEnabled: false">
+        <a-entity
+        cursor="fuse: false; rayOrigin: mouse;"
+        position="0 0 -1"
+        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+        material="color: white; shader: flat">
+        </a-entity>
       </a-camera>
 
       <!-- Preload Image Assets -->
@@ -42,7 +48,7 @@
       <a-image
         src="#GithubIcon"
         position="-1 -0.25 -6"
-        scale="0.25 0.25 0.25"
+        scale="0.3 0.3 0.3"
         class="clickable"
         id="github">
       </a-image>
