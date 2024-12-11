@@ -84,28 +84,26 @@
     </a-scene>
 
     <script>
-      // Adjust cursor rayOrigin based on device
-      const cursor = document.querySelector('a-scene').components.cursor;
-      if (AFRAME.utils.device.isMobile()) {
-        cursor.data.rayOrigin = 'touch';
+      document.addEventListener('DOMContentLoaded', () => {
+      // Function to add click listeners
+      function addIconClickListener(selector, url) {
+        const icon = document.querySelector(selector);
+        if (icon) {
+          icon.addEventListener('click', () => {
+            console.log(`Opening URL: ${url}`);
+            window.open(url, '_blank');
+          });
+        } else {
+          console.error(`Icon not found for selector: ${selector}`);
+        }
       }
 
-      // Add click event listeners to social links
-      document.querySelector('#github').addEventListener('click', () => {
-        window.open('https://github.com/clay-creates', '_blank');
-      });
-
-      document.querySelector('#linkedin').addEventListener('click', () => {
-        window.open('https://www.linkedin.com/in/clay-jones-ux/', '_blank');
-      });
-
-      document.querySelector('#gmail').addEventListener('click', () => {
-        window.location.href = 'mailto:claycreatesstuff@gmail.com';
-      });
-
-      document.querySelector('#clayCreates').addEventListener('click', () => {
-        window.open('https://claycreatesstuff.com', '_blank');
-      });
+      // Add listeners to icons
+      addIconClickListener('#github', 'https://github.com/clay-creates');
+      addIconClickListener('#linkedin', 'https://www.linkedin.com/in/clay-creates/');
+      addIconClickListener('#gmail', 'mailto:claycreatesstuff@gmail.com');
+      addIconClickListener('#clayCreates', 'https://claycreatesstuff.wordpress.com/');
+    });
     </script>
     
 
